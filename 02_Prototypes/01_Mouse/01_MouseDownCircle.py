@@ -1,3 +1,6 @@
+# THIS DOES NOT WORK... THIS CODE IS DEAD!
+# USE AT YOUR OWN (DEBUGGING) RISK!
+
 # Meta -----------------------------------------------------------------------
 import pygame
 
