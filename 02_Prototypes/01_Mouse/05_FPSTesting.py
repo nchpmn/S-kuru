@@ -1,4 +1,5 @@
 import pygame
+import random
 
 screen = pygame.display.set_mode((800,600))
 clock = pygame.time.Clock()
@@ -25,16 +26,9 @@ while running:
     event = pygame.event.poll()
     if event.type == pygame.QUIT:
         running = False
-    elif event.type == pygame.MOUSEBUTTONDOWN:
-        print "MouseDown", pygame.mouse.get_pos()
-        circleCentre = pygame.mouse.get_pos()
-        mouseIsDown = True
-    elif event.type == pygame.MOUSEBUTTONUP:
-        print "MouseUp", pygame.mouse.get_pos()
-        mouseIsDown = False
-        circles.append([circleCentre, r])
-        r = 10
+
+    circles.append([(random.randint(0,800),random.randint(0,600)), random.randint(10,75)])
 
     print "------\n\n\n\nFramerate:", clock.get_fps(), "\n\nCircles:", len(circles)
-
+    
     pygame.display.flip() # Shows drawn frame from buffer
