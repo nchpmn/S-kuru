@@ -7,7 +7,6 @@ running = True
 # Let's load this graphic!
 graphic = pygame.image.load("Logo.jpg")
 
-screen.fill((
 screen.blit(graphic, (0,0))
 
 while running:
