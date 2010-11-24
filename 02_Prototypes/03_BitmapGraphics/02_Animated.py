@@ -3,8 +3,8 @@ import pygame
 screen = pygame.display.set_mode((800,600))
 
 running = True
-direction = -1
-x = 400
+direction = -0.5
+x = 150
 y = 400
 
 # Let's load this graphic!
@@ -18,7 +18,7 @@ while running:
 
     y += direction
 
-    if y == 0 or y == 400:
+    if y == 0 or y == 450:
         direction *= -1
 
     print "X:", x, "\tY:", y
