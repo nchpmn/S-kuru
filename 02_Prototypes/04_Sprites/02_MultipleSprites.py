@@ -1,12 +1,6 @@
 import pygame
 
 class Box(pygame.sprite.Sprite):
-    # All sprite classes should extend pygame.sprite.Sprite. This
-    # gives you several important internal methods that you probably
-    # don't need or want to write yourself. Even if you do rewrite
-    # the internal methods, you should extend Sprite, so things like
-    # isinstance(obj, pygame.sprite.Sprite) return true on it.
-
     def __init__(self, color, pos):
         pygame.sprite.Sprite.__init__(self)
 
@@ -21,10 +15,15 @@ class Box(pygame.sprite.Sprite):
 pygame.init()
 running = True
 screen = pygame.display.set_mode((800,600))
-b = Box((255,0,0), (0,0)) # Make a red box in the top left
-        
+boxes = []
+for color, location in [((225,0,0), (0,0)),
+                         ((0,255,0), (0,100)),
+                         ((0,0,255), (25,200))]:
+    boxes.append(Box(color, location))
+
 while running:
-    screen.blit(b.image, b.rect)
+    for b in boxes:
+        screen.blit(b.image, b.rect)
     event = pygame.event.poll()
     if event.type == pygame.QUIT:
         running = False
