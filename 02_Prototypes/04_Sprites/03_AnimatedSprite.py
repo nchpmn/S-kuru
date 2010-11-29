@@ -14,14 +14,16 @@ class UpDownBox(pygame.sprite.Sprite):
         if self.next_update_time < current_time:
             # At the bottom of the screen, swap direction
             if self.rect.bottom == bottom - 1:
-                self.going_down = False
+                self.down = False
             elif self.rect.top == 0:
-                self.going_down = True
+                self.down = True
 
             # Move up or down by one pixel
-            if self.going_down:
+            if self.down:
+                print "Down"
                 self.rect.top += 1
             else:
+                print "Up"
                 self.rect.top -= 1
 
             self.next_update_time = current_time + 10
@@ -36,7 +38,10 @@ for color, location in [((225,0,0), (0,0)),
     boxes.append(UpDownBox(color, location))
 
 while running:
+    time = pygame.time.get_ticks()
+    screen.fill((0,0,0))
     for b in boxes:
+        b.update(time, 150)
         screen.blit(b.image, b.rect)
     event = pygame.event.poll()
     if event.type == pygame.QUIT:
