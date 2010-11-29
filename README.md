@@ -4,7 +4,7 @@
 About the Game
 --------------
 
-*Sākuru* is a puzzle game designed to be appealing to the eye and at the same time is utterly annoying and frustrating to (eventually) win.
+**Sākuru** is a puzzle game designed to be appealing to the eye and at the same time is utterly annoying and frustrating to (eventually) win.
 
 ### Gameplay ###
 
@@ -14,9 +14,9 @@ Holding and clicking with the mouse draws circles onto the background. Balls of 
 
 Get the ball to the exit. Wow, hard, isn't it?
 
-### OSD ###
+### OCD ###
 
-In a nice shout-out to **World of Goo**, each level has a *Obsessive Completion Disctinction* rating: use less balls, complete in four second or less, etc.
+In a nice shout-out to *World of Goo*, each level has a **Obsessive Completion Disctinction** rating: use less balls, complete in four second or less, etc.
 
 Get all of these, and I'll email you something special. Or not. But you'll never know if you don't try it!
 
