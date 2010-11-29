@@ -8,7 +8,7 @@ class Ball(): # No PyGame sprite this time... let's see if it works!
         self.x = Xspeed
         self.y = Yspeed
 
-        self.image = pygame.image.load("Ball1.png")
+        self.image = pygame.image.load("Ball1.png").convert()
         self.rect = self.image.get_rect()
         self.rect.topleft = self.position
 
