@@ -2,13 +2,13 @@ import pygame, random, math
 
 class Ball():
     def __init__(self, (x,y), size):
-        self.x = x
-        self.y = y
+        self.x = x # Separate X
+        self.y = y # and Y Values
         self.size = size
         self.colour = (0,128,255)
         self.thickness = 1
         self.speed = 0.01
-        self.angle = math.pi/2
+        self.angle = math.pi/2 # We use radians, not degrees!
     
     def display(self):
         pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
