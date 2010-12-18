@@ -57,6 +57,7 @@ def addVectors((angle1, length1), (angle2, length2)):
     return (angle, length)
 
 def collide(b1, b2):
+    """Check for collision between two balls"""
     dx = b1.x - b2.x
     dy = b1.y - b2.y
 
@@ -64,6 +65,7 @@ def collide(b1, b2):
     
     if distance < b1.size + b2.size: # If they have collided
         tangent = math.atan2(dy, dx) # Find the tangent of the point
+        angle = 0.5 * math.pi + tangent # We use this later on
         b1.angle = 2*tangent - b1.angle # Alter angles
         b2.angle = 2*tangent - b2.angle
         (b1.speed, b2.speed) = (b2.speed, b1.speed) # Swap speeds
@@ -84,9 +86,9 @@ running = True
 balls = []
 FPSClock = pygame.time.Clock() # FPS Limiter
 
-gravity = (math.pi, 0.2) # The vector for gravity
-drag = .999
-elasticity = 0.58
+gravity = (math.pi, 0.5) # The vector for gravity
+drag = .985
+elasticity = 0.85
 
 for n in range(0,5): # Create a whole bunch of new balls
     size = 30
