@@ -9,7 +9,7 @@ class Ball():
         self.y = y
         self.size = size
         self.colour = (0,128,255)
-        self.thickness = 1
+        self.thickness = 0
         self.speed = 0.01
         self.angle = math.pi/2
     
@@ -69,11 +69,11 @@ def collide(b1, b2):
         b1.angle = 2*tangent - b1.angle # Alter angles
         b2.angle = 2*tangent - b2.angle
         (b1.speed, b2.speed) = (b2.speed, b1.speed) # Swap speeds
-        b1.speed *= elasticity # Reduce speed due to elasticity
-        b2.speed *= elasticity
+        b1.speed *= elasticity + 0.251 # Reduce speed due to elasticity
+        b2.speed *= elasticity + 0.251
 
-        b1.x += math.sin(angle) # Move particles away from each other
-        b1.y -= math.cos(angle)
+        b1.x += math.sin(angle) *2 # Move particles away from each other
+        b1.y -= math.cos(angle) *2
         b2.x -= math.sin(angle)
         b2.y += math.cos(angle)
 ## INIT -------------------------------------------------
