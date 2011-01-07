@@ -82,7 +82,7 @@ def collideCircle(circle, ball):
         # We don't need to change anything about the circle, just the ball
         tangent = math.atan2(dy, dx)
         ball.angle = 2 * tangent - ball.angle
-        ball.speed *= elasticity + 0.251
+        ball.speed *= elasticity + .35
 
         angle = 0.5 * math.pi + tangent
         ball.x -= math.sin(angle)
