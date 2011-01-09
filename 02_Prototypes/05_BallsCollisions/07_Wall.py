@@ -78,15 +78,25 @@ def collideCircle(circle, ball):
     distance = math.hypot(dx, dy)
 
     if distance + ball.size >= circle.size:
-        print "True"
         # We don't need to change anything about the circle, just the ball
         tangent = math.atan2(dy, dx)
         ball.angle = 2 * tangent - ball.angle
-        ball.speed *= elasticity + .35
+        ball.speed *= elasticity + 0.251
 
         angle = 0.5 * math.pi + tangent
-        ball.x -= math.sin(angle)
-        ball.y += math.cos(angle)
+        ball.x += math.sin(angle)
+        ball.y -= math.cos(angle)
+
+        overlap = math.hypot(dx, dy) - (circle.size - ball.size)
+
+        if overlap >= 0:
+          tangent = math.atan2(dy, dx)
+          ball.angle = 2 * tangent - ball.angle
+          ball.speed *= elasticity
+
+          angle = 0.5 * math.pi + tangent
+          ball.x += math.sin(angle)*overlap
+          ball.y -= math.cos(angle)*overlap
 
 
 
