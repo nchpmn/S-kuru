@@ -103,13 +103,15 @@ drag = .999
 elasticity = 0.5
 
 # Let's create a ball for testing.
-size = 30
-x = 100
-y = 100
-newBall = Ball((x,y), size)
+newBall = Ball((100,100), 30)
 newBall.speed = random.randint(1,4)
 newBall.angle = random.uniform(0, math.pi*2)
 balls.append(newBall)
+
+newBall2 = Ball((350,80), 30)
+newBall2.speed = random.randint(1,4)
+newBall2.angle = random.uniform(0, math.pi*2)
+balls.append(newBall2)
 
 # And a circle for testing.
 newCircle = Circle((300,-20), 300)
