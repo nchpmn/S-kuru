@@ -12,7 +12,7 @@ class Ball():
         self.thickness = 0
         self.speed = 0.01
         self.angle = math.pi/2
-    
+
     def display(self):
         """Draw the ball"""
         pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
@@ -37,8 +37,7 @@ class Circle():
 
     def display(self):
         """Draw the circle"""
-        pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
-        
+        pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)        
 
 ## FUCNTIONS --------------------------------------------
 def addVectors((angle1, length1), (angle2, length2)):
@@ -77,7 +76,7 @@ def collideCircle(circle, ball):
 
     distance = math.hypot(dx, dy)
 
-    if distance + ball.size >= circle.size:
+    if distance >= circle.size - ball.size:
         # We don't need to change anything about the circle, just the ball
         tangent = math.atan2(dy, dx)
         ball.angle = 2 * tangent - ball.angle
@@ -86,18 +85,6 @@ def collideCircle(circle, ball):
         angle = 0.5 * math.pi + tangent
         ball.x += math.sin(angle)
         ball.y -= math.cos(angle)
-
-        overlap = math.hypot(dx, dy) - (circle.size - ball.size)
-
-        if overlap >= 0:
-          tangent = math.atan2(dy, dx)
-          ball.angle = 2 * tangent - ball.angle
-          ball.speed *= elasticity
-
-          angle = 0.5 * math.pi + tangent
-          ball.x += math.sin(angle)*overlap
-          ball.y -= math.cos(angle)*overlap
-
 
 
 ## INIT -------------------------------------------------
