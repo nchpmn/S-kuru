@@ -69,34 +69,44 @@ def collideBalls(b1, b2):
         b2.x -= math.sin(angle)
         b2.y += math.cos(angle)
 
-def collideCircle(circle, ball):
+def collideCircle(ball):
     """Check for collision between a ball and a circle"""
-    dx = circle.x - ball.x
-    dy = circle.y - ball.y
-    distance = math.hypot(dx, dy)
+        # How this will work:
+        # FOR each BALL
+        #     collide = True
+        #     WHILE collide == True
+        #         FOR each CIRCLE
+        #             IF BALL inside CIRCLE
+        #                 collide = False
+        #         IF collide = True * Will only happen if outside all circles *
+        #             [..Do the collision..]
 
-    if distance >= circle.size - ball.size:
-        for i in range(0,(len(circles)-1)):
-            circle2 = circles[i]
-            dx = circle2.x - ball.x
-            dy = circle2.y - ball.y
+    collide = False # Assume false
+    
+    while collide == False:
+        for c in circles:
+            dx = c.x - ball.x
+            dy = c.y - ball.y
             distance = math.hypot(dx, dy)
 
-            if distance >= circle2.size - ball.size:
-                # Meant to be colliding, but inside another
-                # circle --> Do nothing.
-                pass
+            if distance <= c.size - ball.size:
+                # If BALL inside any CIRCLE
+                collide = False
+
             else:
-                # Not inside another circle, should be bouncing.
+                # If BALL is outide ALL CIRCLES
+                collide = True
+                dx = c.x - ball.x
+                dy = c.y - ball.y
+                bounceDist = math.hypot(dx, dy)
+                    
                 tangent = math.atan2(dy, dx)
                 ball.angle = 2 * tangent - ball.angle
                 ball.speed *= elasticity + 0.251
-                
+
                 angle = 0.5 * math.pi + tangent
                 ball.x += math.sin(angle)
                 ball.y -= math.cos(angle)
-
-
 
 ## INIT -------------------------------------------------
 
@@ -133,17 +143,20 @@ while running == True:
     screen.fill((33,33,33))
 
     for c in circles:
+        # For each circle, do this
         c.display()
 
-        for b in balls:
-            collideCircle(c, b)
-
     for b in balls:
+        # For each ball...
+        
         b.move()
 
         for i, ball in enumerate(balls):
-            for ball2 in balls[i+1:]: # Not a full loop: we don't need to..
+            for ball2 in balls[i+1:]: # Not a full loop: we don't need to...
                 collideBalls(ball, ball2)  # test every ball against every other
+
+        collideCircle(b)
+        
         b.display()
 
     pygame.display.flip()

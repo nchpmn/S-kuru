@@ -2,7 +2,7 @@ import pygame, random, math
 
 ## CLASSES ----------------------------------------------
 
-class Ball():
+class Ball(object):
     def __init__(self, (x,y), size):
         """Setting up the new instance"""
         self.x = x
@@ -24,7 +24,7 @@ class Ball():
         (self.angle, self.speed) = addVectors((self.angle, self.speed), gravity)
         self.speed *= drag
 
-class Circle():
+class Circle(object):
     def __init__(self, (x,y), size):
         """Set up the new instance of the Circle class"""
         self.x = x
