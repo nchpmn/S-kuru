@@ -106,6 +106,12 @@ def collideCircle(ball):
         angle = 0.5 * math.pi + tangent
         ball.x += math.sin(angle) + 1
         ball.y -= math.cos(angle) + 1
+
+def spawnBall(position):
+    newBall = Ball(position, 15)
+    newBall.speed = 2
+    newBall.angle = -(math.pi/random.randint(1,4))
+    balls.append(newBall)
         
 ## INIT -------------------------------------------------
 
@@ -122,16 +128,7 @@ gravity = (math.pi, 0.1) # The vector for gravity
 drag = .999
 elasticity = 0.5
 
-# Let's create a ball for testing.
-newBall = Ball((100,100), 30)
-newBall.speed = 3
-newBall.angle = (math.pi/2)
-balls.append(newBall)
-
-newBall = Ball((200,100), 30)
-newBall.speed = 2
-newBall.angle = -(math.pi/3)
-balls.append(newBall)
+frameNumber = 0
 
 # Two circles for testing:
 newCircle = Circle((150,150), 150)
@@ -145,6 +142,11 @@ circles.append(secondCircle)
 while running == True:
     FPSClock.tick(60)
     screen.fill((33,33,33))
+
+    frameNumber += 1
+    
+
+    print "Number of Balls:", len(balls), frameNumber
 
     for c in circles:
         # For each circle, do this
@@ -167,7 +169,10 @@ while running == True:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-                running = False
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            spawnBall(pygame.mouse.get_pos())
                 
     pygame.display.flip() # Display from frame buffer
+    
 pygame.quit()
