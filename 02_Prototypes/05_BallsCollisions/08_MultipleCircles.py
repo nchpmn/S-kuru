@@ -81,32 +81,31 @@ def collideCircle(ball):
         #         IF collide = True * Will only happen if outside all circles *
         #             [..Do the collision..]
 
-    collide = False # Assume false
-    
-    while collide == False:
-        for c in circles:
-            dx = c.x - ball.x
-            dy = c.y - ball.y
-            distance = math.hypot(dx, dy)
 
-            if distance <= c.size - ball.size:
-                # If BALL inside any CIRCLE
-                collide = False
+    hit = False
+    for c in circles:
+        dx = c.x - ball.x
+        dy = c.y - ball.y
+        distance = math.hypot(dx, dy)
 
-            else:
-                # If BALL is outide ALL CIRCLES
-                collide = True
-                dx = c.x - ball.x
-                dy = c.y - ball.y
-                bounceDist = math.hypot(dx, dy)
-                    
-                tangent = math.atan2(dy, dx)
-                ball.angle = 2 * tangent - ball.angle
-                ball.speed *= elasticity + 0.251
+        if distance <= c.size - ball.size:
+            # If BALL inside any CIRCLE
+            hit = False
+            break
+        else:
+            hit = c
 
-                angle = 0.5 * math.pi + tangent
-                ball.x += math.sin(angle)
-                ball.y -= math.cos(angle)
+    if hit:
+        dx = hit.x - ball.x
+        dy = hit.y - ball.y
+            
+        tangent = math.atan2(dy, dx)
+        ball.angle = 2 * tangent - ball.angle
+        ball.speed *= elasticity + 0.251
+
+        angle = 0.5 * math.pi + tangent
+        ball.x += math.sin(angle)
+        ball.y -= math.cos(angle)
 
 ## INIT -------------------------------------------------
 
@@ -129,6 +128,11 @@ newBall.speed = 3
 newBall.angle = (math.pi/2)
 balls.append(newBall)
 
+newBall = Ball((200,100), 30)
+newBall.speed = 3
+newBall.angle = -(math.pi/2)
+balls.append(newBall)
+
 # Two circles for testing:
 newCircle = Circle((150,150), 150)
 circles.append(newCircle)
@@ -139,7 +143,7 @@ circles.append(secondCircle)
 ## MAIN ---------------------------------------------------
     
 while running == True:
-    FPSClock.tick(15)
+    FPSClock.tick(40)
     screen.fill((33,33,33))
 
     for c in circles:
@@ -166,3 +170,4 @@ while running == True:
                 running = False
                 
     pygame.display.flip() # Display from frame buffer
+pygame.quit()
