@@ -143,7 +143,7 @@ circles.append(secondCircle)
 ## MAIN ---------------------------------------------------
     
 while running == True:
-    FPSClock.tick(40)
+    FPSClock.tick(60)
     screen.fill((33,33,33))
 
     for c in circles:
