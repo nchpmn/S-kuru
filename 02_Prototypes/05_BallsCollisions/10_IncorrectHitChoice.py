@@ -25,24 +25,19 @@ class Ball():
         self.speed *= drag
 
 class Circle():
-    def __init__(self, (x,y), size, number):
+    def __init__(self, (x,y), size, colour):
         """Set up the new instance of the Circle class"""
         self.x = x
         self.y = y
         self.size = size
-        self.colour = (236, 236, 236)
+        self.colour = colour
         self.thickness = 2
-        self.id = number
         self.angle = 0 # Needed for collision...
         self.speed = 0 # detection against balls
 
     def display(self):
         """Draw the circle"""
         pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)        
-
-    def __str__(self):
-        """When asked to print class"""
-        return "Ball ID:" + str(self.id)
 
 ## FUCNTIONS --------------------------------------------
 def addVectors((angle1, length1), (angle2, length2)):
@@ -93,17 +88,13 @@ def collideCircle(ball):
         dy = c.y - ball.y
         distance = math.hypot(dx, dy)
 
-        # This needs: a way of finding which circle the ball is closest
-        # to the centre of. This is then used as "hit" for below.
-        # This will need to be then adjusted for the radius of the circle.
-
         if distance <= c.size - ball.size:
             # If BALL inside any CIRCLE
             hit = False
             break
         else:
+            # If we're outside of a circle.
             hit = c
-            print c
 
     if hit:
         dx = hit.x - ball.x
@@ -113,14 +104,19 @@ def collideCircle(ball):
         ball.angle = 2 * tangent - ball.angle
         ball.speed *= elasticity + 0.251
 
+        distance = math.hypot(dx, dy)
+        reboundFactor = (hit.size - ball.size) - distance
+        # reboundFactor must be more than 1
+        print "Rebound:", reboundFactor
+
         angle = 0.5 * math.pi + tangent
-        ball.x += math.sin(angle) + 1
-        ball.y -= math.cos(angle) + 1
+        ball.x += math.sin(angle) * -reboundFactor
+        ball.y -= math.cos(angle) * -reboundFactor
 
 def spawnBall(position):
     newBall = Ball(position, 15)
     newBall.speed = 2
-    newBall.angle = -(math.pi/random.randint(1,4))
+    newBall.angle = -(random.randint(1, 3) * random.random() * 3.1415927)
     balls.append(newBall)
         
 ## INIT -------------------------------------------------
@@ -141,10 +137,10 @@ elasticity = 0.5
 frameNumber = 0
 
 # Two circles for testing:
-newCircle = Circle((150,150), 150, 1)
+newCircle = Circle((150,150), 150, (255,0,0))
 circles.append(newCircle)
 
-secondCircle = Circle((300,200), 150, 2)
+secondCircle = Circle((300,200), 150, (0,255,0))
 circles.append(secondCircle)
 
 ## MAIN ---------------------------------------------------
@@ -156,7 +152,7 @@ while running == True:
     frameNumber += 1
     
 
-    print "Number of Balls:", len(balls), frameNumber
+    print "Number of Balls:", len(balls), "FPS:", FPSClock.get_fps()
 
     for c in circles:
         # For each circle, do this
@@ -182,6 +178,9 @@ while running == True:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             spawnBall(pygame.mouse.get_pos())
+        elif event.type == pygame.KEYDOWN:
+            if pygame.K_SPACE:
+                circles.reverse()
                 
     pygame.display.flip() # Display from frame buffer
     
