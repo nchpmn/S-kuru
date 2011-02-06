@@ -71,18 +71,10 @@ def collideBalls(b1, b2):
 
 def collideCircle(ball):
     """Check for collision between a ball and a circle"""
-        # How this will work:
-        # FOR each BALL
-        #     collide = True
-        #     WHILE collide == True
-        #         FOR each CIRCLE
-        #             IF BALL inside CIRCLE
-        #                 collide = False
-        #         IF collide = True * Will only happen if outside all circles *
-        #             [..Do the collision..]
-
 
     hit = False
+    closestDist = 0
+
     for c in circles:
         dx = c.x - ball.x
         dy = c.y - ball.y
@@ -94,7 +86,9 @@ def collideCircle(ball):
             break
         else:
             # If we're outside of a circle.
-            hit = c
+            if closestDist < c.size - (distance - ball.size):
+                hit = c
+                closestDist = (c.size - (distance - ball.size))
 
     if hit:
         dx = hit.x - ball.x
@@ -107,7 +101,6 @@ def collideCircle(ball):
         distance = math.hypot(dx, dy)
         reboundFactor = (hit.size - ball.size) - distance
         # reboundFactor must be more than 1
-        print "Rebound:", reboundFactor
 
         angle = 0.5 * math.pi + tangent
         ball.x += math.sin(angle) * -reboundFactor
@@ -143,10 +136,13 @@ circles.append(newCircle)
 secondCircle = Circle((300,200), 150, (0,255,0))
 circles.append(secondCircle)
 
+thirdCircle = Circle((180,360), 100, (0,0,255))
+circles.append(thirdCircle)
+
 ## MAIN ---------------------------------------------------
     
 while running == True:
-    FPSClock.tick(25)
+    FPSClock.tick(60)
     screen.fill((33,33,33))
 
     frameNumber += 1
