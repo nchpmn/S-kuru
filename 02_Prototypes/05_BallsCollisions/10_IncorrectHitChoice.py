@@ -1,4 +1,5 @@
 import pygame, random, math
+import pygame.gfxdraw
 
 ## CLASSES ----------------------------------------------
 
@@ -15,6 +16,7 @@ class Ball():
 
     def display(self):
         """Draw the ball"""
+        # pygame.gfxdraw.aacircle(screen,cx,cy,new_dist,settings['MINIMAP_RINGS'])
         pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
 
     def move(self):
@@ -136,7 +138,7 @@ circles.append(newCircle)
 secondCircle = Circle((300,200), 150, (0,255,0))
 circles.append(secondCircle)
 
-thirdCircle = Circle((180,360), 100, (0,0,255))
+thirdCircle = Circle((180,280), 100, (0,0,255))
 circles.append(thirdCircle)
 
 ## MAIN ---------------------------------------------------
