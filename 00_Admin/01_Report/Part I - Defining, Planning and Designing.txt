@@ -1,0 +1,35 @@
+﻿Defining the Problem and Its Solution
+=====================================
+
+Initial Ideas
+-------------
+
+In starting this project I knew fairly early on the genre (or type) of game that I wanted to create: a puzzle game. This would satisfy the 'educational' criteria for the solution as a game requiring logic and specific thinking processes would be stimulating for all ages, including our target market, which is High School Students.
+
+![via XKCD](/01_Images/001_LabyrinthPuzzle_XKCD)
+
+In the discussion amongst the class, we went through a variety of games that we could make. Many of these suggestions, however, did not appeal to me as they were merely remakes of existing games. Some of those mentioned were Minesweeper, a game bundled with Windows since 1989; Tic-Tac-Toe, a well-known game played on paper and computers, and featured in the film War Games; or Solitaire, another game bundled with Windows.
+
+What I was looking for was an original concept that would challenge the user into actually thinking about their next move. Inspired by World of Goo, a puzzle game concerning the building of towers using goo balls that stick together. Some of the aspects I liked about this game were the lack of a time limit. Many puzzle games are only difficult because they feature by an overly restrictive time limit which creates pressure on the user. This pressure makes the game in question far less enjoyable than one that is diffucult purely because of its puzzles or core mechanic.
+
+Throughout this report I am likely to refer to the term *core mechanic*, so I will define it now. A game's core mechanic is its major premise and way of working. For example, Minesweeper's core mechanic is the number in each cell that reveals the number of surrounding mines. The term comes from Dungeons & Dragons, where the core mechanic simply refers to its use of a d20 (a twenty-sided die) to determine success or failure of an action. Because of the importance of the core mechanic to any game, but particularly a puzzle game, I spent some time brainstorming it and getting it just right. Actually brainstorming on paper, here is the *core mechanic* that I finally came up with:
+
+>The aim of S-kuru is to get every ball on the screen to its exit. There are multiple coloured balls and exits; blue ball will only use the blue exit. Circles placed on the screen by the user can be travelled through by balls, and thereby get to their designated exit.
+
+This is S-kuru's core mechanic, and I feel that it is simple enough to grasp fully after a single tutorial level or README file, yet it is complex enough to provide flexibility for the creation of difficult levels. The introduction of different coloured balls and circles was not made until fairly late in the process, but it adds much to the game that will prevent any repetition in levels. Another reason that this game appeals to me is because I would play this myself. The concept intrigues me and the name S-kuru would pique my curiosity (by the way, S-kuru is Japanese for "Circles". Using a Japanese word for the name of a project is commonplace within Ruby circles, however I thought it could be spread to Python without much trouble).
+
+Investigate
+-----------
+
+### Needs of Users ###
+I conducted a survey amongst both specifically chosen participants that were spread across several age groups (respondants were grouped into age brackets between 12 and 20 years old) and an open invitation to participate. Differentiating between these two sets of data, it becomes evident the differing requirements of a game for both High School students and adults. The survey recived a total of 18 respondants over a three-week period.
+
+For a copy of the survey questions and full uninterpreted results, see [Appendix I].
+
+The survey was in three secitons as follows:
+
+#### General gaming statistics ####
+
+The survey asked how do users play games, and for how many hours each week. This would help to determine how the game should progress and the difficulty curve. From the results 71% of people play less than 6 hours per week (which I would classify as a 'casual' gamer), so the game has to have easy save/load points, to enable users to put down the game and come back at a later date/time.
+
+The next two questions were to guage the possible audience for S-kuru, 
