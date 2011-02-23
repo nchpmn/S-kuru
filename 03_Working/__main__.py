@@ -5,25 +5,13 @@
 import pygame
 import random
 import math
-
-pygame.font.init()
-powerGrid = pygame.font.Font("01_assets/PowerGrid.ttf", 100)
+import Module_text # Custom module for handling text functions
+import Module_graphics # Module for handling raster graphics
 
 # --- FUNCTIONS ------------------------------------------
 
 
 # --- CLASSES --------------------------------------------
-class Button():
-    def __init__(self, (x,y), text, size, colour):
-        self.pos = (x,y)
-        self.content = text
-        self.size = size
-        self.colour = colour
-
-    def updateText(self):
-        text = powerGrid.render(self.content, 1, self.colour)
-        textPos = text.get_rect(centerx = screen.get_width()/2)
-        screen.blit(text, textPos)
 
         
 # --- PROGRAM INIT ---------------------------------------
@@ -37,11 +25,12 @@ FPSClock = pygame.time.Clock() # FPS Limiter
 
 running = True # Flag for the game loop
 
-buttons = []
+# Create the menu buttons
+buttonTextList = ["Play Game", "Edit Level", "Quit"]
+buttons = Module_text.menuCreator(buttonTextList, 200, 400, 75, 125, (64, 64, 64), screen)
 
-newButton = Button((200,300), "New Level", 125, (64,64,64))
-buttons.append(newButton)
-
+# Show the game logo
+newLogo = Module_graphics.
 
 # --- GAME LOOP ------------------------------------------
 while running == True:
@@ -51,6 +40,7 @@ while running == True:
 
     # Update Everything
     for u in buttons:
+        u.checkOver()
         u.updateText()
     
     for event in pygame.event.get():
