@@ -114,3 +114,11 @@ That is:
   * The Obsessive Completion Distinction criteria
   * Any storyline or tutorial text that must appear in level
   * Level name and number
+
+***
+
+3. Game Loop Planning
+---------------------
+
+### 3.1 Method Brainstorm ###
+
