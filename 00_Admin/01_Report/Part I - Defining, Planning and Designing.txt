@@ -32,4 +32,6 @@ The survey was in three secitons as follows:
 
 The survey asked how do users play games, and for how many hours each week. This would help to determine how the game should progress and the difficulty curve. From the results 71% of people play less than 6 hours per week (which I would classify as a 'casual' gamer), so the game has to have easy save/load points, to enable users to put down the game and come back at a later date/time.
 
-The next two questions were to guage the possible audience for S-kuru, 
+The next two questions were to guage the possible audience for S-kuru: the first was to find popularity for various 'genres' of gaming, and the second asked specifically regarding puzzle games.
+
+Diving the gaming world into genres is a difficult task, as it poses problems similar to literiature, where the previously separate genres of Sci-Fi and Fantasy have merged now to such a degree where
