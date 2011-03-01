@@ -9,11 +9,12 @@ import Module_text # Custom module for handling text functions
 import Module_graphics # Module for handling raster graphics
 
 # --- FUNCTIONS ------------------------------------------
-
+def updateLogo(newLogo):
+    screen.blit(newLogo.logo, newLogo.pos)
 
 # --- CLASSES --------------------------------------------
 
-        
+
 # --- PROGRAM INIT ---------------------------------------
 width = 800
 height = 600
@@ -26,11 +27,13 @@ FPSClock = pygame.time.Clock() # FPS Limiter
 running = True # Flag for the game loop
 
 # Create the menu buttons
-buttonTextList = ["Play Game", "Edit Level", "Quit"]
-buttons = Module_text.menuCreator(buttonTextList, 200, 400, 75, 125, (64, 64, 64), screen)
+buttonTextList = ["Play Game", "Edit Level", "Quit"] # Items in the menu
+
+# Follows this pattern: (Menu Items, menuX, menuY, menuSpacer, size, colour, surface)
+buttons = Module_text.menuCreator(buttonTextList, 400, 200, 85, 125, (64, 64, 64), screen)
 
 # Show the game logo
-newLogo = Module_graphics.
+newLogo = Module_graphics.Logo((200,0), "01_assets/logo.jpg", screen)
 
 # --- GAME LOOP ------------------------------------------
 while running == True:
@@ -42,6 +45,8 @@ while running == True:
     for u in buttons:
         u.checkOver()
         u.updateText()
+
+    updateLogo(newLogo)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

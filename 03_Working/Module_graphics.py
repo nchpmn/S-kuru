@@ -6,17 +6,22 @@ import pygame
 import random
 
 # --- CLASSES --------------------------------------------
-class Logo(self):
+class Logo():
     def __init__(self, (x,y), imagePath, surface):
         self.pos = (x,y)
         self.path = imagePath
-        self.surface = surface
+        self.surface= surface
 
-        logo = pygame.image.load(imagePath).convert()
+        self.logo = pygame.image.load(imagePath).convert()
 
 
     def updateLogo(self):
-        pygame.blit(logo, surface)
-
+        screen.blit(self.logo, self.pos) # This line does not work - having problems
+                                          # with passing self.surface and accessing
+                                          # the actual surface.
+        
 # --- FUNCTIONS ------------------------------------------
-def 
+def logoMaker((x,y), imagePath, surface):
+    newGraphic = Logo((x,y), imagePath, surface)
+
+    return newGraphic
