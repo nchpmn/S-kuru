@@ -1,0 +1,21 @@
+- - - !!python/tuple [150, 150]
+    - 150
+    - !!python/tuple [255, 0, 0]
+  - - !!python/tuple [300, 200]
+    - 150
+    - !!python/tuple [0, 255, 0]
+  - - !!python/tuple [180, 280]
+    - 100
+    - !!python/tuple [0, 0, 255]
+- - - !!python/tuple [175, 180]
+    - 15
+    - 2
+    - 45
+  - - !!python/tuple [200, 200]
+    - 15
+    - -2
+    - 25
+  - - !!python/tuple [280, 100]
+    - 20
+    - 3
+    - -30
