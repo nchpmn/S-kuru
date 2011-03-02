@@ -119,63 +119,10 @@ def spawnBall(position, balls):
 	newBall.speed = 2
 	newBall.angle = -(random.randint(1, 3) * random.random() * 3.1415927)
 	balls.append(newBall)
-	
 
-
-def Play(surface, balls, circles):
-	# --- PROGRAM INIT ---------------------------------------
-	runLevel = True
-	LevelFPS = pygame.time.Clock() # FPS Limiter
+def Play(screen):
+	print "PLAY THE GAME"
 	
-	gravity = (math.pi, 0.1) # The vector for gravity
-	drag = .999
-	elasticity = 0.5
-	
-	frameNumber = 0
-	
-	# Two circles for testing:
-	newCircle = Circle((150,150), 150, (255,0,0))
-	circles.append(newCircle)
-	
-	secondCircle = Circle((300,200), 150, (0,255,0))
-	circles.append(secondCircle)
-	
-	thirdCircle = Circle((180,280), 100, (0,0,255))
-	circles.append(thirdCircle)
-	
-	## MAIN ---------------------------------------------------
-	
-	while runLevel == True:
-		LevelFPS.tick(60)
-		surface.fill((33,33,33))
-	
-		for c in circles:
-			# For each circle, do this
-			c.display(surface)
-	
-		for b in balls:
-			# For each ball...
-	
-			b.move()
-	
-			for i, ball in enumerate(balls):
-				for ball2 in balls[i+1:]: # Not a full loop: we don't need to...
-					collideBalls(ball, ball2)  # test every ball against every other
-	
-			collideCircle(b)
-	
-			b.display()
-	
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				running = False
-			elif event.type == pygame.MOUSEBUTTONDOWN:
-				spawnBall(pygame.mouse.get_pos(), balls)
-			elif event.type == pygame.KEYDOWN:
-				if pygame.K_SPACE:
-					circles = []
-	
-		pygame.display.flip() # Display from frame buffer
 
 # --- GAME LOOP ------------------------------------------
 

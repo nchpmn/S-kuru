@@ -19,8 +19,6 @@ def updateLogo(newLogo):
 # --- PROGRAM INIT ---------------------------------------
 width = 800
 height = 600
-balls = []
-circles = []
 screen = pygame.display.set_mode((width, height)) # Create the screen
 pygame.display.set_caption("S-kuru") # And give it a title
 
@@ -64,7 +62,8 @@ while running == True:
                 X = item.getXPos()
                 Y = item.getYPos()
                 if X[0] < mousePos[0] < X[1] and Y[0] < mousePos[1] < Y [1]:
-                    playGame.Play(screen, balls, circles)
+                    item.action(screen)
+                    
 
     pygame.display.flip()
 
