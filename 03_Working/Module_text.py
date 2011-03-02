@@ -19,6 +19,14 @@ class Button():
 
     def checkOver(self):
         mousePos = pygame.mouse.get_pos()
+    
+    def getXPos(self):
+        XPosition = [self.pos[0], (self.pos[0] + powerGrid.size(self.content)[0])]
+        return XPosition
+    
+    def getYPos(self):
+        YPosition = [self.pos[1], (self.pos[1] + powerGrid.size(self.content)[1])]
+        return YPosition
         
     def updateText(self):
         text = powerGrid.render(self.content, 1, self.colour)

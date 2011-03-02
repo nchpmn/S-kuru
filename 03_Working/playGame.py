@@ -1,0 +1,182 @@
+#!/usr/bin/env python
+#encoding: UTF-8
+
+# --- MODULE IMPORTING -----------------------------------
+import pygame
+import random
+import math
+
+## CLASSES ----------------------------------------------
+
+class Ball():
+	def __init__(self, (x,y), size):
+		"""Setting up the new instance"""
+		self.x = x
+		self.y = y
+		self.size = size
+		self.colour = (0,128,255)
+		self.thickness = 0
+		self.speed = 0.01
+		self.angle = math.pi/2
+
+	def display(self):
+		"""Draw the ball"""
+		# pygame.gfxdraw.aacircle(screen,cx,cy,new_dist,settings['MINIMAP_RINGS'])
+		pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
+
+	def move(self):
+		"""Move the ball according to angle and speed"""
+		self.x += math.sin(self.angle) * self.speed
+		self.y -= math.cos(self.angle) * self.speed
+		(self.angle, self.speed) = addVectors((self.angle, self.speed), gravity)
+		self.speed *= drag
+
+class Circle():
+	def __init__(self, (x,y), size, colour):
+		"""Set up the new instance of the Circle class"""
+		self.x = x
+		self.y = y
+		self.size = size
+		self.colour = colour
+		self.thickness = 2
+		self.angle = 0 # Needed for collision...
+		self.speed = 0 # detection against balls
+
+	def display(self, surface):
+		"""Draw the circle"""
+		pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
+
+
+## FUCNTIONS --------------------------------------------
+def addVectors((angle1, length1), (angle2, length2)):
+	"""Take two vectors and find the resultant"""
+	x = math.sin(angle1) * length1 + math.sin(angle2) * length2
+	y = math.cos(angle1) * length1 + math.cos(angle2) * length2
+	length = math.hypot(x,y)
+	angle = 0.5 * math.pi - math.atan2(y,x)
+	return (angle, length)
+
+def collideBalls(b1, b2):
+	"""Check for collision between two balls"""
+	dx = b1.x - b2.x
+	dy = b1.y - b2.y
+
+	distance = math.hypot(dx, dy)
+
+	if distance < b1.size + b2.size: # If they have collided
+		tangent = math.atan2(dy, dx) # Find the tangent of the point
+		angle = 0.5 * math.pi + tangent # We use this later on
+		b1.angle = 2*tangent - b1.angle # Alter angles
+		b2.angle = 2*tangent - b2.angle
+		(b1.speed, b2.speed) = (b2.speed, b1.speed) # Swap speeds
+		b1.speed *= elasticity # Reduce speed due to elasticity
+		b2.speed *= elasticity
+
+		b1.x += math.sin(angle) # Move particles away from each other
+		b1.y -= math.cos(angle)
+		b2.x -= math.sin(angle)
+		b2.y += math.cos(angle)
+
+def collideCircle(ball):
+	"""Check for collision between a ball and a circle"""
+
+	hit = False
+	closestDist = 0
+
+	for c in circles:
+		dx = c.x - ball.x
+		dy = c.y - ball.y
+		distance = math.hypot(dx, dy)
+
+		if distance <= c.size - ball.size:
+			# If BALL inside any CIRCLE
+			hit = False
+			break
+		else:
+			# If we're outside of a circle.
+			if closestDist < c.size - (distance - ball.size):
+				hit = c
+				closestDist = (c.size - (distance - ball.size))
+
+	if hit:
+		dx = hit.x - ball.x
+		dy = hit.y - ball.y
+
+		tangent = math.atan2(dy, dx)
+		ball.angle = 2 * tangent - ball.angle
+		ball.speed *= elasticity + 0.251
+
+		distance = math.hypot(dx, dy)
+		reboundFactor = (hit.size - ball.size) - distance
+		# reboundFactor must be more than 1
+
+		angle = 0.5 * math.pi + tangent
+		ball.x += math.sin(angle) * -reboundFactor
+		ball.y -= math.cos(angle) * -reboundFactor
+
+def spawnBall(position, balls):
+	newBall = Ball(position, 15)
+	newBall.speed = 2
+	newBall.angle = -(random.randint(1, 3) * random.random() * 3.1415927)
+	balls.append(newBall)
+	
+
+
+def Play(surface, balls, circles):
+	# --- PROGRAM INIT ---------------------------------------
+	runLevel = True
+	LevelFPS = pygame.time.Clock() # FPS Limiter
+	
+	gravity = (math.pi, 0.1) # The vector for gravity
+	drag = .999
+	elasticity = 0.5
+	
+	frameNumber = 0
+	
+	# Two circles for testing:
+	newCircle = Circle((150,150), 150, (255,0,0))
+	circles.append(newCircle)
+	
+	secondCircle = Circle((300,200), 150, (0,255,0))
+	circles.append(secondCircle)
+	
+	thirdCircle = Circle((180,280), 100, (0,0,255))
+	circles.append(thirdCircle)
+	
+	## MAIN ---------------------------------------------------
+	
+	while runLevel == True:
+		LevelFPS.tick(60)
+		surface.fill((33,33,33))
+	
+		for c in circles:
+			# For each circle, do this
+			c.display(surface)
+	
+		for b in balls:
+			# For each ball...
+	
+			b.move()
+	
+			for i, ball in enumerate(balls):
+				for ball2 in balls[i+1:]: # Not a full loop: we don't need to...
+					collideBalls(ball, ball2)  # test every ball against every other
+	
+			collideCircle(b)
+	
+			b.display()
+	
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				running = False
+			elif event.type == pygame.MOUSEBUTTONDOWN:
+				spawnBall(pygame.mouse.get_pos(), balls)
+			elif event.type == pygame.KEYDOWN:
+				if pygame.K_SPACE:
+					circles = []
+	
+		pygame.display.flip() # Display from frame buffer
+
+# --- GAME LOOP ------------------------------------------
+
+#if __name__ = main
