@@ -15,7 +15,9 @@ class Button():
         self.pos = (x,y)
         self.content = text
         self.size = size
+        self.originalColour = colour
         self.colour = colour
+        self.colour2 = (180,180,180)
         self.surface = surface
         self.actionNumb = action
 
@@ -30,14 +32,29 @@ class Button():
         YPosition = [self.pos[1], (self.pos[1] + powerGrid.size(self.content)[1])]
         return YPosition
     
+    def mouseOver(self):
+        self.colour = self.colour2
+    
+    def notMouseOver(self):
+        self.colour = self.originalColour
+        
     def action(self, passedSurface):
         if self.actionNumb == 1:
             playGame.Play(passedSurface)
+        elif self.actionNumb == 2:
+            pass
+        elif self.actionNumb == 3:
+            running = False
+            pygame.quit()
         
     def updateText(self):
         text = powerGrid.render(self.content, 1, self.colour)
         textPos = self.pos
         self.surface.blit(text, textPos)
+
+class hintText():
+    def __init__(self, text):
+        pass
 
 # --- FUNCTIONS ------------------------------------------
 def menuCreator(menuTextList, menuX, menuY, menuSpacer, size, colour, surface):

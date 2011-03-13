@@ -11,12 +11,20 @@ import module_fileHandling
 ## CLASSES ----------------------------------------------
 
 class Ball():
-	def __init__(self, (x,y), size):
+	def __init__(self, (x,y), size, colourID):
 		"""Setting up the new instance"""
 		self.x = x
 		self.y = y
 		self.size = size
-		self.colour = (0,128,255)
+		self.colourID = colourID
+		if self.colourID == 0:
+			self.colour = (0,0,0)
+		elif self.colourID == 1:
+			self.colour = (255,0,0)
+		elif self.colour == 2:
+			self.colour = (0,255,0)
+		elif self.colour == 3:
+			self.colour = (0,0,255)
 		self.thickness = 0
 		self.speed = 0.01
 		self.angle = math.pi/2
@@ -47,7 +55,6 @@ class Circle():
 	def display(self, surface):
 		"""Draw the circle"""
 		pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
-
 
 ## FUCNTIONS --------------------------------------------
 def addVectors((angle1, length1), (angle2, length2)):
@@ -134,29 +141,40 @@ def Play(screen):
     
     print "PLAY THE GAME"
     levelNumb = 001
-    loadedData = module_fileHandling.loadLevel(levelNumb)
-    print "Have returned"
-    print "Text"
-    loadedText = loadedData[0]
-    print loadedText
-    print "End text\n\nCircles"
-    loadedCircles = loadedData[1]
-    print loadedCircles
-    print "End circles\n\nBalls"
-    loadedBalls = loadedData[2]
-    print loadedBalls
-    print "End Balls"
+    loadText, loadCircles, loadBalls = module_fileHandling.loadLevel(levelNumb)
     
-    for cir in loadedCircles:
+    # loadText = [LevelName, HintText, [WinType, WinCondition]
+    # loadCircles = [ [List Per Circle --> [PosX, PosY], CircleSize, [R, G, B] ] ]
+    # load Bals = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
+    
+    for cir in loadCircles: # Create objects from the list
         print cir
         newCircle = Circle(cir[0], cir[1], cir[2])
         circles.append(newCircle)
+    print "Circles parsed"
     
-    for ba in loadedBalls:
-        newBall = Ball(ba[0], ba[1])
-        newBall.speed = ba[2]
-        newBall.angle = ba[3]
+    for ba in loadBalls:
+        newBall = Ball(ba[0], ba[1], ba[2])
         balls.append(newBall)
+    print "Balls parsed"
+    
+    levelClock = pygame.time.Clock() # Need new clock - new main loop
+    runningLevel = True
+    # --- MAIN LOOP -----------------------------------------
+    while runningLevel == True:
+        levelClock.tick(60)
+        
+        screen.fill((146,146,146))
+        
+        # Draw objects to the screen
+        for c in circles:
+            pass
+        
+        for b in balls:
+            pass
+        
+        pygame.display.flip()
+        
 
 # --- GAME LOOP ------------------------------------------
 

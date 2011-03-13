@@ -51,11 +51,15 @@ while running == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        #if event.type = buttonPlayGamePressed:
-            #GamePlayer.Play(screen)
-            # This will need a new clock, and its own Clock.tick(60)
-            # While playing = true
-            # Put gameplay in separate module, then if __name__ = main, call Play(), and make a new screen.
+        if event.type == pygame.MOUSEMOTION:
+            mousePos = pygame.mouse.get_pos()
+            for item in buttons:
+                X = item.getXPos()
+                Y = item.getYPos()
+                if X[0] < mousePos[0] < X[1] and Y[0] < mousePos[1] < Y [1]:
+                    item.mouseOver()
+                else:
+                    item.notMouseOver()
         if event.type == pygame.MOUSEBUTTONDOWN:
             mousePos = pygame.mouse.get_pos()
             for item in buttons:

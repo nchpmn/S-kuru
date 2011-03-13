@@ -13,8 +13,15 @@ def loadLevel(levelNumb):
     fileName = "03_Levels\Lvl-" + str(levelNumb).zfill(3) + ".skl"
     print fileName
     
-    newData = yaml.load(fileName)
+    levelFile = open(fileName, 'r')
+    loadData = yaml.load(levelFile)
     
     print "Loaded..."
     
-    return newData
+    print loadData
+    
+    text = loadData[0]
+    circles = loadData[1]
+    balls = loadData[2]
+    
+    return text, circles, balls
