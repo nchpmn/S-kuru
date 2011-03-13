@@ -131,6 +131,11 @@ elasticity = 0.5
 
 frameNumber = 0
 
+levelData = ["Level Name",
+             "This is a hint for this particular level. Hi!",
+             [1, 4]] # This is details on how to win the level.
+             # In this example, "Type 1 (Number of circles), 4 (circles max.)"
+
 circleData = [[(150,150), 150, (255,0,0)],
               [(300,200), 150, (0,255,0)],
               [(180,280), 100, (0,0,255)]]
@@ -140,7 +145,7 @@ ballData = [[(175,180), 15, 2, 45],
             [(280,100), 20, 3, -30]]
 
 f = open("01_Level_YAMLDUMP.txt", 'w')
-yaml.dump([circleData, ballData], f)
+yaml.dump([levelData, circleData, ballData], f)
 print yaml.dump([circleData, ballData])
 f.close()
 
@@ -148,8 +153,8 @@ levelData = open("01_Level_YAMLDUMP.txt", 'r')
 newData = yaml.load(levelData)
 print newData
 
-loadedCircles = newData[0]
-loadedBalls = newData[1]
+loadedCircles = newData[1]
+loadedBalls = newData[2]
 
 for cir in loadedCircles:
     newCircle = Circle(cir[0], cir[1], cir[2])

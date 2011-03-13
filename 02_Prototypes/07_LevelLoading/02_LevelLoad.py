@@ -1,5 +1,5 @@
 import pygame, random, math
-import pygame.gfxdraw
+import yaml
 
 ## CLASSES ----------------------------------------------
 
@@ -131,26 +131,28 @@ elasticity = 0.5
 
 frameNumber = 0
 
-# Two circles for testing:
-newCircle = Circle((150,150), 150, (255,0,0))
-circles.append(newCircle)
+levelData = open("02_LevelLoad_YAML.txt", 'r')
+newData = yaml.load(levelData)
+print newData
 
-secondCircle = Circle((300,200), 150, (0,255,0))
-circles.append(secondCircle)
+loadedCircles = newData[0]
+loadedBalls = newData[1]
 
-thirdCircle = Circle((180,280), 100, (0,0,255))
-circles.append(thirdCircle)
+for cir in loadedCircles:
+    newCircle = Circle(cir[0], cir[1], cir[2])
+    circles.append(newCircle)
+
+for ba in loadedBalls:
+    newBall = Ball(ba[0], ba[1])
+    newBall.speed = ba[2]
+    newBall.angle = ba[3]
+    balls.append(newBall)
 
 ## MAIN ---------------------------------------------------
     
 while running == True:
     FPSClock.tick(60)
     screen.fill((33,33,33))
-
-    frameNumber += 1
-    
-
-    print "Number of Balls:", len(balls), "FPS:", FPSClock.get_fps()
 
     for c in circles:
         # For each circle, do this
@@ -169,16 +171,11 @@ while running == True:
         
         b.display()
 
-    pygame.display.flip()
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.MOUSEBUTTONDOWN:
             spawnBall(pygame.mouse.get_pos())
-        elif event.type == pygame.KEYDOWN:
-            if pygame.K_SPACE:
-                circles.reverse()
                 
     pygame.display.flip() # Display from frame buffer
     

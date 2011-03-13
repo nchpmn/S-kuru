@@ -1,6 +1,3 @@
-- - Level Name
-  - This is a hint for this particular level. Hi!
-  - [1, 4]
 - - - !!python/tuple [150, 150]
     - 150
     - !!python/tuple [255, 0, 0]
@@ -18,7 +15,7 @@
     - 15
     - -2
     - 25
-  - - !!python/tuple [280, 100]
+  - - !!python/tuple [280, 80]
     - 20
     - 3
     - -30

@@ -5,6 +5,8 @@
 import pygame
 import random
 import math
+import Module_text
+import module_fileHandling
 
 ## CLASSES ----------------------------------------------
 
@@ -121,8 +123,40 @@ def spawnBall(position, balls):
 	balls.append(newBall)
 
 def Play(screen):
-	print "PLAY THE GAME"
-	
+    # INIT ------------------------------------------------
+    balls = []
+    circles = []
+    FPSClock = pygame.time.Clock() # FPS Limiter
+
+    gravity = (math.pi, 0.1) # The vector for gravity
+    drag = .999
+    elasticity = 0.5
+    
+    print "PLAY THE GAME"
+    levelNumb = 001
+    loadedData = module_fileHandling.loadLevel(levelNumb)
+    print "Have returned"
+    print "Text"
+    loadedText = loadedData[0]
+    print loadedText
+    print "End text\n\nCircles"
+    loadedCircles = loadedData[1]
+    print loadedCircles
+    print "End circles\n\nBalls"
+    loadedBalls = loadedData[2]
+    print loadedBalls
+    print "End Balls"
+    
+    for cir in loadedCircles:
+        print cir
+        newCircle = Circle(cir[0], cir[1], cir[2])
+        circles.append(newCircle)
+    
+    for ba in loadedBalls:
+        newBall = Ball(ba[0], ba[1])
+        newBall.speed = ba[2]
+        newBall.angle = ba[3]
+        balls.append(newBall)
 
 # --- GAME LOOP ------------------------------------------
 
