@@ -60,6 +60,24 @@ class Circle():
 		"""Draw the circle"""
 		pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
 
+class Exit():
+    def __init__(self, (x,y), colourID):
+        """Set up a new instance of the Exit class"""
+        self.x = x
+        self.y = y
+        self.size = size
+        if colourID == 0:
+            self.colour = (0,0,0)
+        elif colourID == 1:
+            self.colour = (255,0,0)
+        elif colour == 2:
+            self.colour = (0,255,0)
+        elif colour == 3:
+            self.colour = (0,0,255)
+    
+    def display(self, surface):
+        """Draw the exit"""
+        pygame.draw.rect(
 
 ## FUCNTIONS --------------------------------------------
 def addVectors((angle1, length1), (angle2, length2)):
