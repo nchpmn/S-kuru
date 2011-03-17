@@ -8,6 +8,11 @@ import math
 import Module_text
 import module_fileHandling
 
+gravity = (math.pi, 0.1) # The vector for gravity
+drag = .999
+elasticity = 0.5
+balls = []
+circles = []
 ## CLASSES ----------------------------------------------
 
 class Ball():
@@ -16,20 +21,19 @@ class Ball():
 		self.x = x
 		self.y = y
 		self.size = size
-		self.colourID = colourID
-		if self.colourID == 0:
+		if colourID == 0:
 			self.colour = (0,0,0)
-		elif self.colourID == 1:
+		elif colourID == 1:
 			self.colour = (255,0,0)
-		elif self.colour == 2:
+		elif colour == 2:
 			self.colour = (0,255,0)
-		elif self.colour == 3:
+		elif colour == 3:
 			self.colour = (0,0,255)
 		self.thickness = 0
 		self.speed = 0.01
 		self.angle = math.pi/2
 
-	def display(self):
+	def display(self, screen):
 		"""Draw the ball"""
 		# pygame.gfxdraw.aacircle(screen,cx,cy,new_dist,settings['MINIMAP_RINGS'])
 		pygame.draw.circle(screen, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
@@ -55,6 +59,7 @@ class Circle():
 	def display(self, surface):
 		"""Draw the circle"""
 		pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
+
 
 ## FUCNTIONS --------------------------------------------
 def addVectors((angle1, length1), (angle2, length2)):
@@ -131,13 +136,7 @@ def spawnBall(position, balls):
 
 def Play(screen):
     # INIT ------------------------------------------------
-    balls = []
-    circles = []
     FPSClock = pygame.time.Clock() # FPS Limiter
-
-    gravity = (math.pi, 0.1) # The vector for gravity
-    drag = .999
-    elasticity = 0.5
     
     print "PLAY THE GAME"
     levelNumb = 001
@@ -145,7 +144,7 @@ def Play(screen):
     
     # loadText = [LevelName, HintText, [WinType, WinCondition]
     # loadCircles = [ [List Per Circle --> [PosX, PosY], CircleSize, [R, G, B] ] ]
-    # load Bals = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
+    # load Balls = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
     
     for cir in loadCircles: # Create objects from the list
         print cir
@@ -160,6 +159,7 @@ def Play(screen):
     
     levelClock = pygame.time.Clock() # Need new clock - new main loop
     runningLevel = True
+	
     # --- MAIN LOOP -----------------------------------------
     while runningLevel == True:
         levelClock.tick(60)
@@ -168,10 +168,19 @@ def Play(screen):
         
         # Draw objects to the screen
         for c in circles:
-            pass
+            c.display(screen)
         
         for b in balls:
-            pass
+            b.move()
+            for i, ball in enumerate(balls):
+                for ball2 in balls[i+1:]:
+                    collideBalls(ball, ball2)
+            collideCircle(b)
+            b.display(screen)
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
         
         pygame.display.flip()
         
