@@ -26,14 +26,7 @@ class Ball():
         self.y = y
         self.size = size
         self.exited = False
-        if colourID == 0:
-            self.colour = (0,0,0)
-        elif colourID == 1:
-            self.colour = (255,0,0)
-        elif colour == 2:
-            self.colour = (0,255,0)
-        elif colour == 3:
-            self.colour = (0,0,255)
+        self.colour = setColour(colourID)
         self.thickness = 0
         self.speed = 0.01
         self.angle = math.pi/2
@@ -52,12 +45,12 @@ class Ball():
         self.speed *= drag
 
 class Circle():
-    def __init__(self, (x,y), size, colour):
+    def __init__(self, (x,y), size, colourID):
         """Set up the new instance of the Circle class"""
         self.x = x
         self.y = y
         self.size = size
-        self.colour = colour
+        self.colour = setColour(colourID)
         self.thickness = 2
         self.angle = 0 # Needed for collision...
         self.speed = 0 # detection against balls
@@ -67,23 +60,17 @@ class Circle():
         pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
 
 class Exit():
-    def __init__(self, (x,y), colourID, size):
+    def __init__(self, (x,y), size, colourID):
         """Set up a new instance of the Exit class"""
         self.x = x
         self.y = y
         self.size = size # Because square, height and width are both self.size
-        if colourID == 0:
-            self.colour = (0,0,0)
-        elif colourID == 1:
-            self.colour = (255,0,0)
-        elif colour == 2:
-            self.colour = (0,255,0)
-        elif colour == 3:
-            self.colour = (0,0,255)
-    
+        self.colour = setColour(colourID)
+
     def display(self, surface):
         """Draw the exit"""
-        pygame.draw.rect(surface, self.colour, (self.x, self.y, self.size, self.size))
+        #pygame.draw.rect(surface, self.colour, (self.x, self.y, self.size, self.size))
+        pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size)
 
 ## FUCNTIONS --------------------------------------------
 def collideBalls(b1, b2):
@@ -123,18 +110,31 @@ def collideExit(ball):
         if module_physicsEngine.collideTest(ball, e):
             ball.exited = True
 
+def setColour(colourID):
+    if colourID == 0:
+        colour = (0,0,0)
+    elif colourID == 1:
+        colour = (255,0,0)
+    elif colourID == 2:
+        colour = (0,255,0)
+    elif colourID == 3:
+        colour = (0,0,255)
+    else:
+        colour = 0
+    return colour
+
 def Play(screen):
     # INIT ------------------------------------------------
     FPSClock = pygame.time.Clock() # FPS Limiter
     
     print "PLAY THE GAME"
     levelNumb = 001
-    loadText, loadCircles, loadBalls = module_fileHandling.loadLevel(levelNumb)
+    loadText, loadCircles, loadBalls, loadExits = module_fileHandling.loadLevel(levelNumb)
     
-    # loadText = [LevelName, HintText, [WinType, WinCondition]
+    # loadText = [LevelName, HintText, [WinType, WinCondition]]
     # loadCircles = [ [List Per Circle --> [PosX, PosY], CircleSize, [R, G, B] ] ]
     # load Balls = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
-    # loadExits = [ [List Per Exit --> [PosX, PosY], Size, ExitColourID
+    # loadExits = [ [List Per Exit --> [PosX, PosY], Size, ExitColourID ] ]
     
     for cir in loadCircles: # Create objects from the list
         print cir
@@ -146,6 +146,11 @@ def Play(screen):
         newBall = Ball(ba[0], ba[1], ba[2])
         balls.append(newBall)
     print "Balls parsed"
+    
+    for ex in loadExits:
+        newExit = Exit(ex[0], ex[1], ex[2])
+        exits.append(newExit)
+    print "Exits parsed"
     
     levelClock = pygame.time.Clock() # Need new clock - new main loop
     runningLevel = True
@@ -166,7 +171,11 @@ def Play(screen):
                 for ball2 in balls[i+1:]:
                     collideBalls(ball, ball2)
             collideCircle(b)
+            collideExit(b)
             b.display(screen)
+        
+        for e in exits:
+            e.display(screen)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
