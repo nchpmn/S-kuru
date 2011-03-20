@@ -23,5 +23,6 @@ def loadLevel(levelNumb):
     text = loadData[0]
     circles = loadData[1]
     balls = loadData[2]
+    exits = loadData[3]
     
-    return text, circles, balls
+    return text, circles, balls, exits

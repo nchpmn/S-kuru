@@ -9,13 +9,19 @@
     - 1
   - - !!python/tuple [180, 280]
     - 100
-    - 2
+    - 0
 - - - !!python/tuple [175, 180]
     - 15
     - 0
   - - !!python/tuple [200, 200]
     - 15
-    - 0
+    - 1
   - - !!python/tuple [280, 100]
     - 20
     - 0
+- - - !!python/tuple [300,400]
+    - 50
+    - 0
+  - - !!python/tuple [250,300]
+    - 75
+    - 3
