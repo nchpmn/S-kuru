@@ -125,7 +125,6 @@ def setColour(colourID):
 
 def Play(screen):
     # INIT ------------------------------------------------
-    FPSClock = pygame.time.Clock() # FPS Limiter
     
     print "PLAY THE GAME"
     levelNumb = 001
