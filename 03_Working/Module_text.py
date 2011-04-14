@@ -7,7 +7,11 @@ import random
 import playGame
 
 pygame.font.init()
-powerGrid = pygame.font.Font("01_assets/PowerGrid.ttf", 100)
+# Several 'imports' of PowerGrid required because each size must be separate
+menuFont = pygame.font.Font("01_assets/PowerGrid.ttf", 125)
+hintFont = pygame.font.Font("01_assets/PowerGrid.ttf", 50)
+levelFont = pygame.font.Font("01_assets/PowerGrid.ttf", 80)
+goalFont = pygame.font.Font("01_assets/PowerGrid.ttf", 30)
 
 # --- CLASSES --------------------------------------------
 class Button():
@@ -25,11 +29,11 @@ class Button():
         mousePos = pygame.mouse.get_pos()
     
     def getXPos(self):
-        XPosition = [self.pos[0], (self.pos[0] + powerGrid.size(self.content)[0])]
+        XPosition = [self.pos[0], (self.pos[0] + menuFont.size(self.content)[0])]
         return XPosition
     
     def getYPos(self):
-        YPosition = [self.pos[1], (self.pos[1] + powerGrid.size(self.content)[1])]
+        YPosition = [self.pos[1], (self.pos[1] + menuFont.size(self.content)[1])]
         return YPosition
     
     def mouseOver(self):
@@ -48,13 +52,43 @@ class Button():
             pygame.quit()
         
     def updateText(self):
-        text = powerGrid.render(self.content, 1, self.colour)
+        text = menuFont.render(self.content, 1, self.colour)
         textPos = self.pos
         self.surface.blit(text, textPos)
 
-class hintText():
-    def __init__(self, text):
-        pass
+class basicText():
+    """This is for text that does not have an action; i.e. static text"""
+    def __init__(self, (x,y), text, textType, surface):
+        self.pos = (x,y)
+        self.content = text
+        
+        # Text Types: 1 = Menu || 2 = Level || 3 = Goal || 4 = Hint
+        if textType == 1:
+            self.ID = 1
+            self.colour = (225,0,0)
+        elif textType == 2:
+            self.ID = 2
+            self.colour = (0,225,0)
+        elif textType == 3:
+            self.ID = 3
+            self.colour = (0,0,225)
+        elif textType == 4:
+            self.ID = 4
+            self.colour = (225,0,225)
+            
+        self.surface = surface
+    
+    def updateText(self):
+        if self.ID == 2:
+            text = levelFont.render(self.content, 1, self.colour)
+        elif self.ID == 3:
+            text = hintFont.render(self.content, 1, self.colour)
+        elif self.ID == 4:
+            text = goalFont.render(self.content, 1, self.colour)
+        elif self.ID == 1:
+            text = menuFont.render(self.content, 1, self.colour)
+        textPos = self.pos
+        self.surface.blit(text, textPos)
 
 # --- FUNCTIONS ------------------------------------------
 def menuCreator(menuTextList, menuX, menuY, menuSpacer, size, colour, surface):
@@ -66,3 +100,7 @@ def menuCreator(menuTextList, menuX, menuY, menuSpacer, size, colour, surface):
         n += 1
 
     return menu
+
+def updateWelcomeText(surface):
+    welcome = basicText((300,400), "Welcome to the Game!", 3, surface)
+    welcome.updateText()
