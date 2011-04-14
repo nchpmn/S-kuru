@@ -15,8 +15,8 @@ class Logo():
         self.logo = pygame.image.load(imagePath).convert()
 
 
-    def updateLogo(self):
-        screen.blit(self.logo, self.pos) # This line does not work - having problems
+    def update(self):
+        self.surface.blit(self.logo, self.pos) # This line does not work - having problems
                                           # with passing self.surface and accessing
                                           # the actual surface.
 

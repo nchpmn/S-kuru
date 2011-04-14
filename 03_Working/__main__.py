@@ -10,8 +10,8 @@ import Module_graphics # Module for handling raster graphics
 import playGame # Play the game!
 
 # --- FUNCTIONS ------------------------------------------
-def updateLogo(newLogo):
-    screen.blit(newLogo.logo, newLogo.pos)
+#def updateLogo(newLogo):
+#    screen.blit(newLogo.logo, newLogo.pos)
 
 
 # --- CLASSES --------------------------------------------
@@ -47,7 +47,7 @@ while running == True:
         u.checkOver()
         u.updateText()
 
-    updateLogo(newLogo)
+    newLogo.update()
     Module_text.updateWelcomeText(screen)
     
     for event in pygame.event.get():

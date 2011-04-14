@@ -137,10 +137,17 @@ def Play(screen):
     # load Balls = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
     # loadExits = [ [List Per Exit --> [PosX, PosY], Size, ExitColourID ] ]
     
-    newText = Module_text.basicText(((795-Module_text.calculateSize(loadText[0], 2)[0]), 5), loadText[0], 2, screen)
+    newText = Module_text.basicText((15, 5), loadText[0], 2, screen)
     staticText.append(newText)
     newText = Module_text.basicText((5, (585-Module_text.calculateSize(loadText[1], 4)[1])), loadText[1], 4, screen)
     staticText.append(newText)
+    
+    if loadText[2][0] == 1:
+        # Game Type is Timed
+        pass
+    elif loadText[2][0] == 2:
+        # Game Type is Circles
+        circleLimit = loadText[2][1]
     
     for cir in loadCircles: # Create objects from the list
         print cir
@@ -166,6 +173,8 @@ def Play(screen):
     # --- MAIN LOOP -----------------------------------------
     while runningLevel == True:
         levelClock.tick(60)
+        
+        checkWinning()
         
         screen.fill((146,146,146))
         
@@ -193,7 +202,7 @@ def Play(screen):
         # Get events and act upon them
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
+                runningLevel = False
         
         pygame.display.flip()
     
