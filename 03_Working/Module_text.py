@@ -9,8 +9,8 @@ import playGame
 pygame.font.init()
 # Several 'imports' of PowerGrid required because each size must be separate
 menuFont = pygame.font.Font("01_assets/PowerGrid.ttf", 125)
-hintFont = pygame.font.Font("01_assets/PowerGrid.ttf", 50)
-levelFont = pygame.font.Font("01_assets/PowerGrid.ttf", 80)
+hintFont = pygame.font.Font("01_assets/PowerGrid.ttf", 45)
+levelFont = pygame.font.Font("01_assets/PowerGrid.ttf", 100)
 goalFont = pygame.font.Font("01_assets/PowerGrid.ttf", 30)
 
 # --- CLASSES --------------------------------------------
@@ -63,16 +63,16 @@ class basicText():
         self.content = text
         
         # Text Types: 1 = Menu || 2 = Level || 3 = Goal || 4 = Hint
-        if textType == 1:
+        if textType == 1: # Menu
             self.ID = 1
             self.colour = (225,0,0)
-        elif textType == 2:
+        elif textType == 2: # Level
             self.ID = 2
             self.colour = (0,225,0)
-        elif textType == 3:
+        elif textType == 3: # Goal
             self.ID = 3
             self.colour = (0,0,225)
-        elif textType == 4:
+        elif textType == 4: # Hint
             self.ID = 4
             self.colour = (225,0,225)
             
@@ -82,9 +82,9 @@ class basicText():
         if self.ID == 2:
             text = levelFont.render(self.content, 1, self.colour)
         elif self.ID == 3:
-            text = hintFont.render(self.content, 1, self.colour)
-        elif self.ID == 4:
             text = goalFont.render(self.content, 1, self.colour)
+        elif self.ID == 4:
+            text = hintFont.render(self.content, 1, self.colour)
         elif self.ID == 1:
             text = menuFont.render(self.content, 1, self.colour)
         textPos = self.pos

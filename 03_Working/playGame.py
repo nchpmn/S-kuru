@@ -8,6 +8,7 @@ import math
 import Module_text
 import module_fileHandling
 import module_physicsEngine
+import Module_graphics
 
 balls = []
 circles = []
@@ -138,6 +139,8 @@ def Play(screen):
     
     newText = Module_text.basicText(((795-Module_text.calculateSize(loadText[0], 2)[0]), 5), loadText[0], 2, screen)
     staticText.append(newText)
+    newText = Module_text.basicText((5, (585-Module_text.calculateSize(loadText[1], 4)[1])), loadText[1], 4, screen)
+    staticText.append(newText)
     
     for cir in loadCircles: # Create objects from the list
         print cir
@@ -154,6 +157,8 @@ def Play(screen):
         newExit = Exit(ex[0], ex[1], ex[2])
         exits.append(newExit)
     print "Exits parsed"
+    
+    hintRect = Module_graphics.simpleBox((0, 560), 800, 40, (225, 128, 0), screen)
     
     levelClock = pygame.time.Clock() # Need new clock - new main loop
     runningLevel = True
@@ -180,14 +185,19 @@ def Play(screen):
         for e in exits:
             e.display(screen)
         
+        hintRect.update()
+        
         for t in staticText:
             t.updateText()
         
+        # Get events and act upon them
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
         
         pygame.display.flip()
+    
+    pygame.quit()
         
 
 # --- GAME LOOP ------------------------------------------
