@@ -12,6 +12,7 @@ import module_physicsEngine
 balls = []
 circles = []
 exits = []
+staticText = []
 
 gravity = (math.pi, 0.1) # The vector for gravity
 drag = .999
@@ -135,6 +136,9 @@ def Play(screen):
     # load Balls = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
     # loadExits = [ [List Per Exit --> [PosX, PosY], Size, ExitColourID ] ]
     
+    newText = Module_text.basicText(((795-Module_text.calculateSize(loadText[0], 2)[0]), 5), loadText[0], 2, screen)
+    staticText.append(newText)
+    
     for cir in loadCircles: # Create objects from the list
         print cir
         newCircle = Circle(cir[0], cir[1], cir[2])
@@ -175,6 +179,9 @@ def Play(screen):
         
         for e in exits:
             e.display(screen)
+        
+        for t in staticText:
+            t.updateText()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

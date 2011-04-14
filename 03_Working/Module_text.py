@@ -104,3 +104,15 @@ def menuCreator(menuTextList, menuX, menuY, menuSpacer, size, colour, surface):
 def updateWelcomeText(surface):
     welcome = basicText((300,400), "Welcome to the Game!", 3, surface)
     welcome.updateText()
+
+def calculateSize(content, sizeID):
+    if sizeID == 1:
+        size = menuFont.size(content)
+    elif sizeID == 2:
+        size = levelFont.size(content) 
+    elif sizeID == 3:
+        size = hintFont.size(content)
+    elif sizeID == 4:
+        size = goalFont.size(content)
+    
+    return size

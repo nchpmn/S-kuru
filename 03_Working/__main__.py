@@ -13,6 +13,7 @@ import playGame # Play the game!
 def updateLogo(newLogo):
     screen.blit(newLogo.logo, newLogo.pos)
 
+
 # --- CLASSES --------------------------------------------
 
 
@@ -47,6 +48,7 @@ while running == True:
         u.updateText()
 
     updateLogo(newLogo)
+    Module_text.updateWelcomeText(screen)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
