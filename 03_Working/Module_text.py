@@ -61,21 +61,8 @@ class basicText():
     def __init__(self, (x,y), text, textType, surface):
         self.pos = (x,y)
         self.content = text
-        
-        # Text Types: 1 = Menu || 2 = Level || 3 = Goal || 4 = Hint
-        if textType == 1: # Menu
-            self.ID = 1
-            self.colour = (225,0,0)
-        elif textType == 2: # Level
-            self.ID = 2
-            self.colour = (0,225,0)
-        elif textType == 3: # Goal
-            self.ID = 3
-            self.colour = (0,0,225)
-        elif textType == 4: # Hint
-            self.ID = 4
-            self.colour = (225,0,225)
-            
+        self.ID = textType
+        self.colour = setTextColour(textType)      
         self.surface = surface
     
     def updateText(self):
@@ -116,3 +103,26 @@ def calculateSize(content, sizeID):
         size = goalFont.size(content)
     
     return size
+
+def setTextColour(textID):
+    if textID == 1: # Menu
+        colour = (225,0,0)
+    elif textID == 2: # Level
+        colour = (0,225,0)
+    elif textID == 3: # Goal
+        colour = (0,0,225)
+    elif textID == 4: # Hint
+        colour = (225,0,225)
+    return colour
+            
+def updateDynamic(content, textID, pos, passedSurface):
+    if textID == 2:
+        text = levelFont.render(str(content), 1, setTextColour(textID))
+    elif textID == 3:
+        text = goalFont.render(str(content), 1, setTextColour(textID))
+    elif textID == 4:
+        text = hintFont.render(str(content), 1, setTextColour(textID))
+    elif textID == 1:
+        text = menuFont.render(str(content), 1, setTextColour(textID))
+    textPos = pos
+    passedSurface.blit(text, textPos)

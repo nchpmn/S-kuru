@@ -150,7 +150,10 @@ def Play(screen):
         pass
     elif loadText[2][0] == 2:
         # Game Type is Circles
-        circleLimit = loadText[2][1]
+        circleGoal = loadText[2][1]
+        newText = Module_text.basicText((100,100), "Goal: < " + str(circleGoal), 3, screen)
+        staticText.append(newText)
+        circleCount = 0
     
     for cir in loadCircles: # Create objects from the list
         print cir
@@ -184,7 +187,6 @@ def Play(screen):
         screen.fill((146,146,146))
         
         # Draw objects to the screen
-        hintRect.update() # Draw static before dynamic
         for c in circles:
             c.display(screen)
         for b in balls:
@@ -197,8 +199,12 @@ def Play(screen):
             b.display(screen)
         for e in exits:
             e.display(screen)
+        hintRect.update() # Draw static before dynamic
         for t in staticText:
             t.updateText()
+        
+        # Dynamic Text
+        Module_text.updateDynamic("Circles: " + str(circleCount), 2, (50,50), screen)
         
         # User Interaction
         if mouseIsDown == True:
@@ -218,6 +224,7 @@ def Play(screen):
                 mouseIsDown = False
                 newCircle = Circle(circleCentre, r, currentColourID)
                 circles.append(newCircle)
+                circleCount += 1
                 r = 10
                 
         
