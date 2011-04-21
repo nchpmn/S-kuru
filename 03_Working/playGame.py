@@ -137,8 +137,11 @@ def Play(screen):
     # load Balls = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
     # loadExits = [ [List Per Exit --> [PosX, PosY], Size, ExitColourID ] ]
     
+    # Level Name
     newText = Module_text.basicText((15, 5), loadText[0], 2, screen)
     staticText.append(newText)
+    
+    # Hint Text
     newText = Module_text.basicText((5, (585-Module_text.calculateSize(loadText[1], 4)[1])), loadText[1], 4, screen)
     staticText.append(newText)
     
@@ -169,19 +172,21 @@ def Play(screen):
     
     levelClock = pygame.time.Clock() # Need new clock - new main loop
     runningLevel = True
+    circleCentre = (0,0)
+    mouseIsDown = False
+    currentColourID = 0
+    r = 10
     
     # --- MAIN LOOP -----------------------------------------
     while runningLevel == True:
         levelClock.tick(60)
         
-        checkWinning()
-        
         screen.fill((146,146,146))
         
         # Draw objects to the screen
+        hintRect.update() # Draw static before dynamic
         for c in circles:
             c.display(screen)
-        
         for b in balls:
             b.move()
             for i, ball in enumerate(balls):
@@ -190,19 +195,31 @@ def Play(screen):
             collideCircle(b)
             collideExit(b)
             b.display(screen)
-        
         for e in exits:
             e.display(screen)
-        
-        hintRect.update()
-        
         for t in staticText:
             t.updateText()
+        
+        # User Interaction
+        if mouseIsDown == True:
+            pygame.draw.circle(screen, setColour(currentColourID), circleCentre, r, 2)
+            r += 1
         
         # Get events and act upon them
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 runningLevel = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                print "MouseDown", pygame.mouse.get_pos()
+                circleCentre = pygame.mouse.get_pos()
+                mouseIsDown = True
+            elif event.type == pygame.MOUSEBUTTONUP:
+                print "MouseUp", pygame.mouse.get_pos()
+                mouseIsDown = False
+                newCircle = Circle(circleCentre, r, currentColourID)
+                circles.append(newCircle)
+                r = 10
+                
         
         pygame.display.flip()
     
