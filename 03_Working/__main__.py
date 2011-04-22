@@ -62,7 +62,7 @@ while running == True:
                     item.mouseOver()
                 else:
                     item.notMouseOver()
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONUP:
             mousePos = pygame.mouse.get_pos()
             for item in buttons:
                 X = item.getXPos()

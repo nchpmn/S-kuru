@@ -44,7 +44,7 @@ class Button():
         
     def action(self, passedSurface):
         if self.actionNumb == 1:
-            playGame.Play(passedSurface)
+            playGame.parseLevel(passedSurface)
         elif self.actionNumb == 2:
             pass
         elif self.actionNumb == 3:
@@ -126,3 +126,4 @@ def updateDynamic(content, textID, pos, passedSurface):
         text = menuFont.render(str(content), 1, setTextColour(textID))
     textPos = pos
     passedSurface.blit(text, textPos)
+
