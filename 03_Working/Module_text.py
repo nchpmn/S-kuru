@@ -3,7 +3,6 @@
 
 # --- MODULE IMPORTING -----------------------------------
 import pygame
-import random
 import playGame
 
 pygame.font.init()
@@ -14,6 +13,9 @@ levelFont = pygame.font.Font("01_assets/PowerGrid.ttf", 100)
 goalFont = pygame.font.Font("01_assets/PowerGrid.ttf", 30)
 
 # --- CLASSES --------------------------------------------
+# --------------------------------------------------------
+# --------------------------------------------------------
+
 class Button():
     def __init__(self, (x,y), text, size, colour, surface, action):
         self.pos = (x,y)
@@ -58,11 +60,11 @@ class Button():
 
 class basicText():
     """This is for text that does not have an action; i.e. static text"""
-    def __init__(self, (x,y), text, textType, surface):
+    def __init__(self, (x,y), text, textID, surface):
         self.pos = (x,y)
         self.content = text
-        self.ID = textType
-        self.colour = setTextColour(textType)      
+        self.ID = textID
+        self.colour = setTextColour(textID)      
         self.surface = surface
     
     def updateText(self):
@@ -77,7 +79,10 @@ class basicText():
         textPos = self.pos
         self.surface.blit(text, textPos)
 
-# --- FUNCTIONS ------------------------------------------
+# --- FUNCTIONS -------------------------------------------
+# ---------------------------------------------------------
+# ---------------------------------------------------------
+
 def menuCreator(menuTextList, menuX, menuY, menuSpacer, size, colour, surface):
     n = 0
     menu = []
@@ -116,6 +121,7 @@ def setTextColour(textID):
     return colour
             
 def updateDynamic(content, textID, pos, passedSurface):
+    """Render text to a surface based on textID for differnt sizes & fonts"""
     if textID == 2:
         text = levelFont.render(str(content), 1, setTextColour(textID))
     elif textID == 3:
@@ -125,5 +131,4 @@ def updateDynamic(content, textID, pos, passedSurface):
     elif textID == 1:
         text = menuFont.render(str(content), 1, setTextColour(textID))
     textPos = pos
-    passedSurface.blit(text, textPos)
-
+    passedSurface.blit(text, textPos)   
