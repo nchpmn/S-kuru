@@ -88,9 +88,9 @@ def collideCircle(ball):
     for c in circles:
         # Code cannot be replaced with physicsEngine.collideTest because it
         # is slightly differnt, testing if ball [ball] inside a circle [c]
-        dx = c.x - ball.x
-        dy = c.y - ball.y
-        distance = math.hypot(dx, dy)
+        dx = c.x - ball.x + (0.5*ball.size)
+        dy = c.y - ball.y + (0.5*ball.size)
+        distance = math.hypot(dx, dy) - ball.size
 
         if distance <= c.size - ball.size:
             # If BALL inside any CIRCLE
@@ -103,6 +103,7 @@ def collideCircle(ball):
                 closestDist = (c.size - (distance - ball.size))
 
     if hit:
+        
         module_physicsEngine.circleBounce(hit, ball)
 
 def collideExit(ball):
