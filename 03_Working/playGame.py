@@ -84,20 +84,34 @@ def collideCircle(ball):
 
     hit = False
     closestDist = 0
+    circleIndex = -1
 
     for c in circles:
         # Code cannot be replaced with physicsEngine.collideTest because it
         # is slightly differnt, testing if ball [ball] inside a circle [c]
+        circleIndex += 1
         dx = c.x - ball.x
         dy = c.y - ball.y
         distance = math.hypot(dx, dy)
 
-        if distance <= c.size - ball.size:
+        if distance <= c.size:
             # If BALL inside any CIRCLE
             hit = False
             break
         else:
-            # If we're outside of a circle.
+            # If we're outside of _this_ circle. --> Check if any part of the ball is inside another circle
+            tempCircleList = circles[:]
+            tempCircleList.pop(circleIndex)
+            
+            for temp in tempCircleList:
+                dx = temp.x - ball.x
+                dy = temp.y - ball.y
+                tempDistance = math.hypot(dx, dy)
+                
+                if tempDistance <= temp.size:
+                    hit = False
+                    break
+            
             if closestDist < c.size - (distance - ball.size):
                 hit = c
                 closestDist = (c.size - (distance - ball.size))
