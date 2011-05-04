@@ -7,7 +7,7 @@ import random
 import math
 import Module_text # Custom module for handling text functions
 import Module_graphics # Module for handling raster graphics
-import playGame # Play the game!
+import preGame # Play the game!
 
 # --- FUNCTIONS ------------------------------------------
 #def updateLogo(newLogo):

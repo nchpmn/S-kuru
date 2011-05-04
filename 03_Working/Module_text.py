@@ -3,7 +3,7 @@
 
 # --- MODULE IMPORTING -----------------------------------
 import pygame
-import playGame
+import preGame
 
 pygame.font.init()
 # Several 'imports' of PowerGrid required because each size must be separate
@@ -33,20 +33,18 @@ class Button():
     def getXPos(self):
         XPosition = [self.pos[0], (self.pos[0] + menuFont.size(self.content)[0])]
         return XPosition
-    
     def getYPos(self):
         YPosition = [self.pos[1], (self.pos[1] + menuFont.size(self.content)[1])]
         return YPosition
     
     def mouseOver(self):
         self.colour = self.colour2
-    
     def notMouseOver(self):
         self.colour = self.originalColour
         
     def action(self, passedSurface):
         if self.actionNumb == 1:
-            playGame.parseLevel(passedSurface)
+            preGame.parseLevel(passedSurface)
         elif self.actionNumb == 2:
             pass
         elif self.actionNumb == 3:
