@@ -81,42 +81,43 @@ def collideBalls(b1, b2):
 
 def collideCircle(ball):
     """Check for collision between a ball and a circle"""
-
-    hit = False
-    closestDist = 0
+    
     circleIndex = -1
-
+    closestDist = 0
+    hit = False
+    
     for c in circles:
-        # Code cannot be replaced with physicsEngine.collideTest because it
-        # is slightly differnt, testing if ball [ball] inside a circle [c]
+        # Check each ball against every circle
         circleIndex += 1
-        dx = c.x - ball.x
-        dy = c.y - ball.y
-        distance = math.hypot(dx, dy)
-
-        if distance <= c.size:
-            # If BALL inside any CIRCLE
+        
+        dx1 = c.x - ball.x
+        dy1 = c.y - ball.y
+        dist1 = math.hypot(dx1, dy1)
+        
+        if dist1 <= c.size - 1:
+            # If we are inside 'c'
             hit = False
-            if (distance - (0.5*ball.size)) > 0:
-                break
+            break
         else:
-            # If we're outside of _this_ circle. --> Check if any part of the ball is inside another circle
-            tempCircleList = circles[:]
-            tempCircleList.pop(circleIndex)
+            # If we are outside 'c' or touching the border
             
-            for temp in tempCircleList:
-                dx = temp.x - ball.x
-                dy = temp.y - ball.y
-                tempDistance = math.hypot(dx, dy)
+            remainingCir = circles[:] # Make a new list of only remaining circles
+    
+            for c2 in remainingCir:
+                # Check each remaining circle
                 
-                if tempDistance <= temp.size:
+                dx2 = c2.x - ball.x
+                dy2 = c2.y - ball.y
+                dist2 = math.hypot(dx2, dy2)
+    
+                if dist2 <= c2.size:
+                    # If we are inside 'c2'
                     hit = False
                     break
             
-            if closestDist < c.size - (distance - ball.size):
+            if c.size - (dist1 - ball.size) > closestDist:
                 hit = c
-                closestDist = (c.size - (distance - ball.size))
-
+                closestDist = (c.size - (dist1 - ball.size))
     if hit:
         module_physicsEngine.circleBounce(hit, ball)
 
@@ -195,13 +196,16 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
         for c in circles:
             c.display(screen)
         for b in balls:
+            b.display(screen)
             b.move()
             for i, ball in enumerate(balls):
                 for ball2 in balls[i+1:]:
                     collideBalls(ball, ball2)
             collideCircle(b)
             collideExit(b)
-            b.display(screen)
+            
+            
+            
         for e in exits:
             e.display(screen)
         hintRect.update() # Draw static before dynamic
