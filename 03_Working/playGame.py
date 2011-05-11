@@ -97,7 +97,8 @@ def collideCircle(ball):
         if distance <= c.size:
             # If BALL inside any CIRCLE
             hit = False
-            break
+            if (distance - (0.5*ball.size)) > 0:
+                break
         else:
             # If we're outside of _this_ circle. --> Check if any part of the ball is inside another circle
             tempCircleList = circles[:]

@@ -7,7 +7,7 @@ import random
 import math
 import yaml
 
-## FUNCTIONS ----------------------------------------------
+## LEVELS -------------------------------------------------
 
 def loadLevel(levelNumb):
     fileName = "03_Levels\Lvl-" + str(levelNumb).zfill(3) + ".skl"
@@ -26,3 +26,11 @@ def loadLevel(levelNumb):
     exits = loadData[3]
     
     return text, circles, balls, exits
+
+## PLAYER PROFILES ----------------------------------------
+
+def loadPlayer(playerName):
+    fileName = "02_Players\Plyr-" + str(playerName) + ".skp"
+    
+    playerFile = open(fileName, 'r')
+    playerData = yaml.load(playerFile)
