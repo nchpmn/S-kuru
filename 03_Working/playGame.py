@@ -90,7 +90,7 @@ def collideCircle(ball):
         # Check each ball against every circle
         circleIndex += 1
         
-        dx1 = c.x - ball.x
+        dx1 = c.x - ball.x 
         dy1 = c.y - ball.y
         dist1 = math.hypot(dx1, dy1)
         
