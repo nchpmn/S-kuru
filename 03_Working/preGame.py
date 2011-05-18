@@ -50,7 +50,7 @@ def parseLevel(screen):
     
     
     
-    levelNumb = 001 # This will need to be changed
+    levelNumb = module_fileHandling.loadPlayer(playerName) # This will need to be changed
     loadText, loadCircles, loadBalls, loadExits = module_fileHandling.loadLevel(levelNumb)
     
     # loadText = [LevelName, HintText, [WinType, WinCondition]]

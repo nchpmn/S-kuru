@@ -189,6 +189,9 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
     # --- MAIN LOOP -----------------------------------------
     while runningLevel == True:
         levelClock.tick(60)
+        
+        # Check if the user has won the level
+        checkWinning()
 
         screen.fill((146,146,146))
 
@@ -203,8 +206,6 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
                     collideBalls(ball, ball2)
             collideCircle(b)
             collideExit(b)
-            
-            
             
         for e in exits:
             e.display(screen)

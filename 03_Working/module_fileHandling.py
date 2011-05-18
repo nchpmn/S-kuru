@@ -34,9 +34,14 @@ def loadPlayer(playerName):
     
     try:
         # This code does not work. I am trying to create the playerFile if it doesn't exist.
-        playerFile = open(fileName,'rw')
-        playerFile.write("")
+        playerFile = open(fileName,'r')
         playerData = yaml.load(playerFile)
         playerFile.close()
+        
     except IOError as e:
-        print("({})".format(e))
+        playerFile = open(fileName, 'w')
+        playerFile.write("001")
+        playerFile.close
+        playerData = "001"
+    
+    return playerData
