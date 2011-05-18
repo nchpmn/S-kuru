@@ -48,6 +48,8 @@ def parseLevel(screen):
     playerName = string.join(current_string,"")
     
     
+    
+    
     levelNumb = 001 # This will need to be changed
     loadText, loadCircles, loadBalls, loadExits = module_fileHandling.loadLevel(levelNumb)
     

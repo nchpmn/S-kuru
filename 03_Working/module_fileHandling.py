@@ -32,5 +32,11 @@ def loadLevel(levelNumb):
 def loadPlayer(playerName):
     fileName = "02_Players\Plyr-" + str(playerName) + ".skp"
     
-    playerFile = open(fileName, 'r')
-    playerData = yaml.load(playerFile)
+    try:
+        # This code does not work. I am trying to create the playerFile if it doesn't exist.
+        playerFile = open(fileName,'rw')
+        playerFile.write("")
+        playerData = yaml.load(playerFile)
+        playerFile.close()
+    except IOError as e:
+        print("({})".format(e))
