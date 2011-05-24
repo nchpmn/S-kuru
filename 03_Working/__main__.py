@@ -4,18 +4,9 @@
 # --- MODULE IMPORTING -----------------------------------
 import pygame
 import random
-import math
 import Module_text # Custom module for handling text functions
 import Module_graphics # Module for handling raster graphics
 import preGame # Play the game!
-
-# --- FUNCTIONS ------------------------------------------
-#def updateLogo(newLogo):
-#    screen.blit(newLogo.logo, newLogo.pos)
-
-
-# --- CLASSES --------------------------------------------
-
 
 # --- PROGRAM INIT ---------------------------------------
 width = 800
