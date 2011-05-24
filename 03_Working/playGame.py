@@ -139,6 +139,18 @@ def setColour(colourID):
     else:
         colour = 0
     return colour
+
+def winCheck(balls, winData):
+    print balls, winData[0]
+    if balls != [] and winData[0] != 2:
+        print "LEVEL FINISHED!"
+        # The level only finishes once all balls have exited
+        if winData[0] == 0:
+            # Timed level
+            pass
+        elif winData[0] == 1:
+            # Use less than X circles
+            print "IT WORKS"
     
 # --- MAIN ------------------------------------------------
 
@@ -153,9 +165,13 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
     staticText.append(newText)
     hintRect = Module_graphics.simpleBox((0, 560), 800, 40, (225, 128, 0), screen)
     
+    # Goal Text
     circleGoal = loadText[2][1]
     newText = Module_text.basicText((100,100), "Goal: < " + str(circleGoal), 3, screen)
     staticText.append(newText)
+    
+    # Game Type
+    gameType = loadText[2]
 
 
 # loadCircles = [ [List Per Circle --> [PosX, PosY], CircleSize, [R, G, B] ] ]
@@ -191,7 +207,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
         levelClock.tick(60)
         
         # Check if the user has won the level
-        checkWinning()
+        winCheck(balls, gameType)
 
         screen.fill((146,146,146))
 

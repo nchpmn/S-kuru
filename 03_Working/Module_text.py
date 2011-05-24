@@ -10,7 +10,7 @@ pygame.font.init()
 menuFont = pygame.font.Font("01_assets/PowerGrid.ttf", 125)
 hintFont = pygame.font.Font("01_assets/PowerGrid.ttf", 45)
 levelFont = pygame.font.Font("01_assets/PowerGrid.ttf", 100)
-goalFont = pygame.font.Font("01_assets/PowerGrid.ttf", 30)
+goalFont = pygame.font.Font("01_assets/PowerGrid.ttf", 55)
 
 # --- CLASSES --------------------------------------------
 # --------------------------------------------------------
@@ -92,6 +92,7 @@ def menuCreator(menuTextList, menuX, menuY, menuSpacer, size, colour, surface):
     return menu
 
 def updateWelcomeText(surface):
+    
     welcome = basicText((300,400), "Welcome to the Game!", 3, surface)
     welcome.updateText()
 
@@ -109,13 +110,13 @@ def calculateSize(content, sizeID):
 
 def setTextColour(textID):
     if textID == 1: # Menu
-        colour = (225,0,0)
+        colour = (64,64,64)
     elif textID == 2: # Level
-        colour = (0,225,0)
+        colour = (64,64,64)
     elif textID == 3: # Goal
-        colour = (0,0,225)
+        colour = (64,64,64)
     elif textID == 4: # Hint
-        colour = (225,0,225)
+        colour = (236,236,236)
     return colour
             
 def updateDynamic(content, textID, pos, passedSurface):
