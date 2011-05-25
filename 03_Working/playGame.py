@@ -184,11 +184,13 @@ def winCheck(balls, winData, originalCircles):
     
     return runFlag, playerScore
 
-def clearPreviousData(circles, balls, exits):
+def clearPreviousData(circles, balls, exits, staticText):
     balls = []
     circles = []
     exits = []
     staticText = []
+    print "Lists Reset!"
+    print "B", balls, "C", circles, "E", exits, "T", staticText
     
 # --- MAIN ------------------------------------------------
 
