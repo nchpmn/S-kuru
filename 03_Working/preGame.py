@@ -55,9 +55,4 @@ def parseLevel(screen):
     
     # loadText = [LevelName, HintText, [WinType, WinCondition]]
 
-    if loadText[2][0] == 1:
-        # Game Type is Timed
-        pass
-    elif loadText[2][0] == 2:
-        # Game Type is Circles
-        playGame.play(loadText, loadCircles, loadBalls, loadExits, screen)
+    playGame.play(loadText, loadCircles, loadBalls, loadExits, screen)

@@ -27,7 +27,7 @@ class Ball():
         self.y = y
         self.size = size
         self.exited = False
-        self.colour = setColour(colourID)
+        self.colour = setBallColour(colourID)
         self.thickness = 0
         self.speed = 0.01
         self.angle = math.pi/2
@@ -51,14 +51,14 @@ class Circle():
         self.x = x
         self.y = y
         self.size = size
-        self.colour = setColour(colourID)
+        self.colour = setCircleColour(colourID)
         self.thickness = 2
         self.angle = 0 # Needed for collision...
         self.speed = 0 # detection against balls
 
     def display(self, surface):
         """Draw the circle"""
-        pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
+        pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size)
 
 class Exit():
     def __init__(self, (x,y), size, colourID):
@@ -66,7 +66,7 @@ class Exit():
         self.x = x
         self.y = y
         self.size = size # Because square, height and width are both self.size
-        self.colour = setColour(colourID)
+        self.colour = setBallColour(colourID)
 
     def display(self, surface):
         """Draw the exit"""
@@ -127,9 +127,9 @@ def collideExit(ball):
         if module_physicsEngine.collideTest(ball, e):
             ball.exited = True
 
-def setColour(colourID):
+def setCircleColour(colourID):
     if colourID == 0:
-        colour = (0,0,0)
+        colour = (236,236,236)
     elif colourID == 1:
         colour = (255,0,0)
     elif colourID == 2:
@@ -137,24 +137,68 @@ def setColour(colourID):
     elif colourID == 3:
         colour = (0,0,255)
     else:
-        colour = 0
+        colour = (0,0,0)
     return colour
 
-def winCheck(balls, winData):
-    print balls, winData[0]
-    if balls != [] and winData[0] != 2:
-        print "LEVEL FINISHED!"
-        # The level only finishes once all balls have exited
-        if winData[0] == 0:
-            # Timed level
-            pass
-        elif winData[0] == 1:
-            # Use less than X circles
-            print "IT WORKS"
+def setBallColour(colourID):
+    if colourID == 0:
+        colour = (136,136,136)
+    elif colourID == 1:
+        colour = (135,0,0)
+    elif colourID == 2:
+        colour = (0,135,0)
+    elif colourID == 3:
+        colour = (0,0,135)
+    else:
+        colour = (255,255,255)
+    return colour
+
+def winCheck(balls, winData, originalCircles):
+    # Remember that winType starts at 1, not 0!
+    playerScore = 0
+    if winData[0] != 3:
+        # Any game type except 'Selection'
+        winFlag = True
+        for b in balls:
+            if b.exited == False:
+                winFlag = False
+                runFlag = True
+                break
+    
+        if winFlag == True:
+            print "LEVEL FINISHED!"
+            if winData[0] == 1:
+                # Timed level
+                pass
+            if winData[0] == 2:
+                # Circle limit level
+                if (len(circles) - originalCircles) < winData[1]:
+                    print "YOU WON THE GAME!"
+                    circlesUsed = len(circles) - originalCircles
+                    maxCircles = winData[1]
+                    circleRatio = circlesUsed / maxCircles
+                    circlePerc = circleRatio * 100
+                    playerScore = 100 - circlePerc
+                    print circlesUsed, maxCircles, "\n", circleRatio, circlePerc, playerScore
+                    runFlag = False
+    
+    return runFlag, playerScore
+
+def clearPreviousData(circles, balls, exits, staticText):
+    balls = []
+    circles = []
+    exits = []
+    staticText = []
+    print "Lists Reset!"
+    print "B", balls, "C", circles, "E", exits, "T", staticText
     
 # --- MAIN ------------------------------------------------
 
 def play(loadText, loadCircles, loadBalls, loadExits, screen):
+
+    # Clear the lists from a previous player
+    clearPreviousData(circles, balls, exits, staticText)
+    
 # loadText = [LevelName, HintText, [WinType, WinCondition]]
     # Level Name
     newText = Module_text.basicText((15, 5), loadText[0], 2, screen)
@@ -172,6 +216,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
     
     # Game Type
     gameType = loadText[2]
+    print gameType
 
 
 # loadCircles = [ [List Per Circle --> [PosX, PosY], CircleSize, [R, G, B] ] ]
@@ -180,6 +225,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
         newCircle = Circle(cir[0], cir[1], cir[2])
         circles.append(newCircle)
     print "Circles parsed"
+    originalCircles = len(circles)
 
 # load Balls = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
     for ba in loadBalls:
@@ -195,6 +241,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
 
 # Set up variables
     levelClock = pygame.time.Clock() # Need new clock - new main loop
+    print "Reset runningLevel"
     runningLevel = True
     circleCentre = (0,0)
     mouseIsDown = False
@@ -203,38 +250,37 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
     circleCount = 0
     
     # --- MAIN LOOP -----------------------------------------
-    while runningLevel == True:
+    while runningLevel:
         levelClock.tick(60)
-        
-        # Check if the user has won the level
-        winCheck(balls, gameType)
 
         screen.fill((146,146,146))
-
+        
         # Draw objects to the screen
         for c in circles:
             c.display(screen)
         for b in balls:
-            b.display(screen)
             b.move()
             for i, ball in enumerate(balls):
                 for ball2 in balls[i+1:]:
                     collideBalls(ball, ball2)
             collideCircle(b)
             collideExit(b)
+            b.display(screen)
             
         for e in exits:
             e.display(screen)
         hintRect.update() # Draw static before dynamic
         for t in staticText:
             t.updateText()
-
+        
+        print "WhileLoop after collisions", runningLevel
+        
         # Dynamic Text
         Module_text.updateDynamic("Circles: " + str(circleCount), 2, (50,50), screen)
 
         # User Interaction
         if mouseIsDown == True:
-            pygame.draw.circle(screen, setColour(currentColourID), circleCentre, r, 2)
+            pygame.draw.circle(screen, setCircleColour(currentColourID), circleCentre, r, 2)
             r += 1
 
         # Get events and act upon them
@@ -252,5 +298,22 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
                 circles.append(newCircle)
                 circleCount += 1
                 r = 10
-
+            elif event.type == pygame.KEYDOWN:
+                currentKey = event.key
+                if currentKey == pygame.K_1:
+                    currentColourID = 0
+                elif currentKey == pygame.K_2:
+                    currentColourID = 1
+                elif currentKey == pygame.K_3:
+                    currentColourID = 2
+                elif currentKey == pygame.K_4:
+                    currentColourID = 3
+                else:
+                    pass
+        
         pygame.display.flip()
+        
+        # Check if the user has won the level
+        runningLevel, playerScore = winCheck(balls, gameType, originalCircles)
+    
+    print "Player Score:", playerScore
