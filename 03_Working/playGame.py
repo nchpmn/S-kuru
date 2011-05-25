@@ -27,7 +27,7 @@ class Ball():
         self.y = y
         self.size = size
         self.exited = False
-        self.colour = setColour(colourID)
+        self.colour = setBallColour(colourID)
         self.thickness = 0
         self.speed = 0.01
         self.angle = math.pi/2
@@ -51,14 +51,14 @@ class Circle():
         self.x = x
         self.y = y
         self.size = size
-        self.colour = setColour(colourID)
+        self.colour = setCircleColour(colourID)
         self.thickness = 2
         self.angle = 0 # Needed for collision...
         self.speed = 0 # detection against balls
 
     def display(self, surface):
         """Draw the circle"""
-        pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
+        pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size)
 
 class Exit():
     def __init__(self, (x,y), size, colourID):
@@ -66,7 +66,7 @@ class Exit():
         self.x = x
         self.y = y
         self.size = size # Because square, height and width are both self.size
-        self.colour = setColour(colourID)
+        self.colour = setBallColour(colourID)
 
     def display(self, surface):
         """Draw the exit"""
@@ -127,9 +127,9 @@ def collideExit(ball):
         if module_physicsEngine.collideTest(ball, e):
             ball.exited = True
 
-def setColour(colourID):
+def setCircleColour(colourID):
     if colourID == 0:
-        colour = (0,0,0)
+        colour = (236,236,236)
     elif colourID == 1:
         colour = (255,0,0)
     elif colourID == 2:
@@ -137,20 +137,44 @@ def setColour(colourID):
     elif colourID == 3:
         colour = (0,0,255)
     else:
-        colour = 0
+        colour = (0,0,0)
+    return colour
+
+def setBallColour(colourID):
+    if colourID == 0:
+        colour = (136,136,136)
+    elif colourID == 1:
+        colour = (135,0,0)
+    elif colourID == 2:
+        colour = (0,135,0)
+    elif colourID == 3:
+        colour = (0,0,135)
+    else:
+        colour = (255,255,255)
     return colour
 
 def winCheck(balls, winData):
-    print balls, winData[0]
-    if balls != [] and winData[0] != 2:
-        print "LEVEL FINISHED!"
-        # The level only finishes once all balls have exited
-        if winData[0] == 0:
-            # Timed level
-            pass
-        elif winData[0] == 1:
-            # Use less than X circles
-            print "IT WORKS"
+    if winData[0] != 3:
+        # Any game type except 'Selection'
+        print "GameType Check"
+        winFlag = True
+        for b in balls:
+            if b.exited == False:
+                winFlag = False
+                print "Not finished yet"
+                break
+    
+        if winFlag == True:
+            print "LEVEL FINISHED!"
+            if winData[0] == 0:
+                # Timed level
+                pass
+            if winData[0] == 1:
+                # Circle limit level
+                if (len(circles) - originalCircles) < winData[1]:
+                    print "YOU WON THE GAME!"
+                    pygame.quit()
+                
     
 # --- MAIN ------------------------------------------------
 
@@ -172,6 +196,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
     
     # Game Type
     gameType = loadText[2]
+    print gameType
 
 
 # loadCircles = [ [List Per Circle --> [PosX, PosY], CircleSize, [R, G, B] ] ]
@@ -180,6 +205,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
         newCircle = Circle(cir[0], cir[1], cir[2])
         circles.append(newCircle)
     print "Circles parsed"
+    originalCircles = len(circles)
 
 # load Balls = [ [List Per Ball --> [PosX, PosY], BallSize, BallColourID] ] ]
     for ba in loadBalls:
@@ -215,13 +241,13 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
         for c in circles:
             c.display(screen)
         for b in balls:
-            b.display(screen)
             b.move()
             for i, ball in enumerate(balls):
                 for ball2 in balls[i+1:]:
                     collideBalls(ball, ball2)
             collideCircle(b)
             collideExit(b)
+            b.display(screen)
             
         for e in exits:
             e.display(screen)
@@ -234,7 +260,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
 
         # User Interaction
         if mouseIsDown == True:
-            pygame.draw.circle(screen, setColour(currentColourID), circleCentre, r, 2)
+            pygame.draw.circle(screen, setCircleColour(currentColourID), circleCentre, r, 2)
             r += 1
 
         # Get events and act upon them
@@ -252,5 +278,17 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
                 circles.append(newCircle)
                 circleCount += 1
                 r = 10
+            elif event.type == pygame.KEYDOWN:
+                currentKey = event.key
+                if currentKey == pygame.K_1:
+                    currentColourID = 0
+                elif currentKey == pygame.K_2:
+                    currentColourID = 1
+                elif currentKey == pygame.K_3:
+                    currentColourID = 2
+                elif currentKey == pygame.K_4:
+                    currentColourID = 3
+                else:
+                    pass
 
         pygame.display.flip()
