@@ -1,4 +1,0 @@
-- Welcome to the Game
-- Guess What?
-- Why hello there!
-- Circles & Balls!
