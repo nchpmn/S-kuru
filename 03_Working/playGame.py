@@ -174,8 +174,12 @@ def winCheck(balls, winData, originalCircles):
                 # Circle limit level
                 if (len(circles) - originalCircles) < winData[1]:
                     print "YOU WON THE GAME!"
-                    print len(circles), orignalCircles, (len(circles) - originalCircles), winData[1]
-                    playerScore = (100 - (((len(circles) - originalCircles) / winData[1]) * 100))
+                    circlesUsed = len(circles) - originalCircles
+                    maxCircles = winData[1]
+                    circleRatio = circlesUsed / maxCircles
+                    circlePerc = circleRatio * 100
+                    playerScore = 100 - circlePerc
+                    print circlesUsed, maxCircles, circleRatio, circlePerc, playerScore
                     runFlag = False
     
     return runFlag, playerScore
