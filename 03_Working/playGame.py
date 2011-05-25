@@ -173,7 +173,10 @@ def winCheck(balls, winData):
                 # Circle limit level
                 if (len(circles) - originalCircles) < winData[1]:
                     print "YOU WON THE GAME!"
-                    pygame.quit()
+                    #playerScore = (100 - (((len(circles) - originalCircles) / winData) * 100))
+                    #print playerScore
+                    runningLevel = False
+                    print "After winning"
                 
     
 # --- MAIN ------------------------------------------------
@@ -230,7 +233,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
     
     # --- MAIN LOOP -----------------------------------------
     while runningLevel == True:
-        levelClock.tick(60)
+        levelClock.tick(30)
         
         # Check if the user has won the level
         winCheck(balls, gameType)
@@ -292,3 +295,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
                     pass
 
         pygame.display.flip()
+    
+    print "Player Score:", playerScore
+    
+    pygame.quit()
