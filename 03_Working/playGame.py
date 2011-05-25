@@ -179,14 +179,24 @@ def winCheck(balls, winData, originalCircles):
                     circleRatio = circlesUsed / maxCircles
                     circlePerc = circleRatio * 100
                     playerScore = 100 - circlePerc
-                    print circlesUsed, maxCircles, circleRatio, circlePerc, playerScore
+                    print circlesUsed, maxCircles, "\n", circleRatio, circlePerc, playerScore
                     runFlag = False
     
     return runFlag, playerScore
+
+def clearPreviousData(circles, balls, exits):
+    balls = []
+    circles = []
+    exits = []
+    staticText = []
     
 # --- MAIN ------------------------------------------------
 
 def play(loadText, loadCircles, loadBalls, loadExits, screen):
+
+    # Clear the lists from a previous player
+    clearPreviousData(circles, balls, exits, staticText)
+    
 # loadText = [LevelName, HintText, [WinType, WinCondition]]
     # Level Name
     newText = Module_text.basicText((15, 5), loadText[0], 2, screen)
@@ -239,7 +249,7 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
     
     # --- MAIN LOOP -----------------------------------------
     while runningLevel:
-        levelClock.tick(30)
+        levelClock.tick(60)
 
         screen.fill((146,146,146))
         
@@ -305,7 +315,3 @@ def play(loadText, loadCircles, loadBalls, loadExits, screen):
         runningLevel, playerScore = winCheck(balls, gameType, originalCircles)
     
     print "Player Score:", playerScore
-    
-    raw_input("....")
-    
-    pygame.quit()
