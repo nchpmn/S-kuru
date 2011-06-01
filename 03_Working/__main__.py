@@ -28,6 +28,6 @@ mainRunning = True # Flag for the game loop
 
 # --- MAIN LOOP -------------------------------------------
 while mainRunning:
-    loadScreen.main(screen)
+    loadScreen.mainMenu(screen)
         
 pygame.quit()
