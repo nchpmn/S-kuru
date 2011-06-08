@@ -63,6 +63,8 @@ def mainMenu(screen):
         
         # Sleep my pretty.... sleep...
         time.sleep(0.75)
+    
+    return
 
 # If this module is run directly
 if __name__ == '__main__':

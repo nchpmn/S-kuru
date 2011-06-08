@@ -12,22 +12,40 @@
 # --- MODULE IMPORTING ------------------------------------
 import pygame
 import random
-import sys
-sys.path.append("_00_modules")
 import loadScreen
+import graphics
 
 # --- INITIALISATION --------------------------------------
+# Create the screen
 width = 800
 height = 600
-screen = pygame.display.set_mode((width, height)) # Create the screen
-pygame.display.set_caption("S-kuru") # And give it a title
+screen = pygame.display.set_mode((width, height)) 
+# And give it a title
+pygame.display.set_caption("S-kuru") 
 
-mainClock = pygame.time.Clock() # Clock to limit the FPS
+# Clock to limit the FPS in menu
+mainClock = pygame.time.Clock() 
 
-mainRunning = True # Flag for the game loop
+# Flag for the mainRunning loop
+mainRunning = True
+
+# --- Create Objects ---
+skuruLogo = graphics.Bitmap(75, 150, '01_assets/menuLogo.jpg', screen)
+
 
 # --- MAIN LOOP -------------------------------------------
+# Loading screen
+loadScreen.mainMenu(screen)
+
 while mainRunning:
-    loadScreen.mainMenu(screen)
-        
+    mainClock.tick(60)
+    
+    # Clear the screen each frame
+    screen.fill((146,146,146))
+    
+    # --- Set & Update Objects ---
+    skuruLogo.update()
+    
+    pygame.display.flip()
+    
 pygame.quit()
