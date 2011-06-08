@@ -22,12 +22,11 @@ def mainMenu(screen):
     while loadLoop:
         screen.fill((0,0,0))
 
-        
-
         # Get out of the loadLoop eventually
         if random.randint(0,3) == 2:
             loadLoop = Fase
-
+        
+        
         
 
 # If this module is run directly
