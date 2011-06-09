@@ -20,24 +20,28 @@ class Button():
         self.pos = [int(x),int(y)]
         self.content = text
         self.size = sizeID
-        self.colour = textColour(colourID)
-        self.originalColour = textColour(colourID)
+        self.colourID = colourID
+        self.originalColourID = colourID
         self.surface = surface
     
     # Check for mouseover, change the colour if needed and blit to surface
     def update(self):
-        mousePos = pygame.mouse.get_pos()
-        # Get the pixel width and height of the text at a specific size
-        textPixels = calculateTextSize(self.size, self.content)
+        # Next section commented out - mouseOver different colouring. Broken Code!
         
-        # If the mouse is within the block of text
-        if self.pos[0] < mousePos[0] < (self.pos[0] +  textPixels[0]) and self.pos[1] < mousePos[1] < (self.pos[1] + textPixels[1]):
-            # Set self.colour to a 'mouseOver' colour
-            self.colour = textColour(5)
-        elif self.colour != self.originalColour:
-            self.colour = self.originalColour
+        #mousePos = pygame.mouse.get_pos()
+        ## Get the pixel width and height of the text at a specific size
+        #textPixels = calculateTextSize(self.size, self.content)
+        #
+        ## If the mouse is within the block of text
+        #if mousePos != None:
+        #    if self.pos[0] < mousePos[0] < (self.pos[0] +  textPixels[0]) and self.pos[1] < mousePos[1] < (self.pos[1] + textPixels[1]):
+        #        # Set self.colour to a 'mouseOver' colour
+        #        self.colourID = 5
+        #    elif self.colourID != self.originalColourID:
+        #        self.colourID = self.originalColourID
         
-        text = menuFont.render(self.content, 1, self.colour)
+        # Render the text to the screen
+        text = renderFont(self.size, self.colourID, self.content)
         textPos = self.pos
         self.surface.blit(text, textPos)
 
@@ -58,15 +62,38 @@ def textColour(colourID):
                (236,236,236)]
     return colours[colourID]
 
+# Render a font ready for blitting to surface
+def renderFont(sizeID, colourID, content):
+    if sizeID == 1:
+        pixelSize = fontSize1.render(content, 1, textColour(colourID))
+    elif sizeID == 2:
+        pixelSize = fontSize2.render(content, 1, textColour(colourID))
+    elif sizeID == 3:
+        pixelSize = fontSize3.render(content, 1, textColour(colourID))
+    elif sizeID == 4:
+        pixelSize = fontSize4.render(content, 1, textColour(colourID))
+    
+    return pixelSize
+
 # Return the pixel height and width of a block of text
 def calculateTextSize(sizeID, content):
     if sizeID == 1:
-        pixelSize = fontSize1.size(self.content)
+        pixelSize = fontSize1.size(content)
     elif sizeID == 2:
-        pixelSize = fontSize2.size(self.content)
+        pixelSize = fontSize2.size(content)
     elif sizeID == 3:
-        pixelSize = fontSize3.size(self.content)
+        pixelSize = fontSize3.size(content)
     elif sizeID == 4:
-        pixelSize = fontSize4.size(self.content)
-    
-    return pixelSize
+        pixelSize = fontSize4.size(content)
+
+# Create a menu with specific spacing from a list of strings
+def menuCreator(menuTextList, menuX, menuY, menuSpacer, sizeID, colourID, surface):
+    n = 0
+    menu = []
+    for menuItem in menuTextList:
+        # MenuItem is a two-element array, of a string - content - and an integer - actionID
+        newButton = Button(menuX, (menuY + (menuSpacer * n)), menuItem[0], sizeID, colourID, menuItem[1], surface)
+        menu.append(newButton)
+        n += 1
+
+    return menu

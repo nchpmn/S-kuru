@@ -38,6 +38,7 @@ skuruLogo = graphics.Bitmap(150, 75, '01_assets/menuLogo.jpg', screen)
 menuText = [["Play", 1],
             ["Editor", 2],
             ["Quit", 0]]
+menuList = text.menuCreator(menuText, 200, 200, 100, 1, 2, screen)
 
 
 # --- MAIN LOOP -------------------------------------------
@@ -52,6 +53,8 @@ while mainRunning:
     
     # --- Set & Update Objects ---
     skuruLogo.update()
+    for button in menuList:
+        button.update()
     
     pygame.display.flip()
     
