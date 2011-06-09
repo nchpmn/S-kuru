@@ -14,6 +14,7 @@ import pygame
 import random
 import loadScreen
 import graphics
+import text
 
 # --- INITIALISATION --------------------------------------
 # Create the screen
@@ -30,7 +31,13 @@ mainClock = pygame.time.Clock()
 mainRunning = True
 
 # --- Create Objects ---
-skuruLogo = graphics.Bitmap(75, 150, '01_assets/menuLogo.jpg', screen)
+# Logo Bitmap
+skuruLogo = graphics.Bitmap(150, 75, '01_assets/menuLogo.jpg', screen)
+
+# Menu Items
+menuText = [["Play", 1],
+            ["Editor", 2],
+            ["Quit", 0]]
 
 
 # --- MAIN LOOP -------------------------------------------

@@ -35,6 +35,10 @@ def mainMenu(screen):
         # Show a random number of messages each time
         for i in range(0,random.randint(1,3)):
             
+            # If we've already used every message
+            if len(usedPhraseIndex) == len(newList):
+                break
+            
             # If usedPhraseIndex has items, check for duplicates
             if len(usedPhraseIndex) != 0:
                 # Create a flag to 'ok' each load message with
