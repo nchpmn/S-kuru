@@ -56,6 +56,11 @@ while mainRunning:
     for button in menuList:
         button.update()
     
+    # --- Event Catching & Handling ---
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            mainRunning = False
+    
     pygame.display.flip()
     
 pygame.quit()
