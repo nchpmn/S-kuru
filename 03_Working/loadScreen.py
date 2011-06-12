@@ -28,7 +28,7 @@ def mainMenu(screen):
     screen.fill((0,0,0))
     
     # PyGame Loop
-    while loadLoop and len(usedPhraseIndex) != len(newList):
+    while loadLoop and len(usedPhraseIndex) != len(newList) and len(usedPhraseIndex) < 18:
 
         # Get out of the loadLoop eventually
         if random.randint(0,4) == 2:
