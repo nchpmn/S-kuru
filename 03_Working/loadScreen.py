@@ -6,8 +6,7 @@ import yaml
 import pygame
 import random
 import time
-#import fontRender
-
+import text
 
 # If we're loading the main game and main menu
 def mainMenu(screen):
@@ -16,17 +15,20 @@ def mainMenu(screen):
     # YAML.load the list of load items
     f = open("01_assets/loadScreen.skt", 'r')
     newList = yaml.load(f)
-    print newList # Debug - let's make sure the list contains stuff
-
+    
     # PyGame Load Loop Flag
     loadLoop = True
     
     # List for phrases we've already used
     usedPhraseIndex = []
+    # List of class objects
+    renderText = []
+    
+    # Make the screen black to begin
+    screen.fill((0,0,0))
     
     # PyGame Loop
     while loadLoop and len(usedPhraseIndex) != len(newList):
-        screen.fill((0,0,0))
 
         # Get out of the loadLoop eventually
         if random.randint(0,4) == 2:
@@ -58,8 +60,12 @@ def mainMenu(screen):
             else:
                 messageIndex = random.randint(0,(len(newList)-1))
             
-            # Print the phrase - to be replaced with display phrase stuff!
-            print newList[messageIndex]
+            # Display the phrase on the surface
+            newMessage = text.renderFont(3, 1, newList[messageIndex])
+            textPos = ((20, (10+(len(usedPhraseIndex)*30))))
+            screen.blit(newMessage, textPos)
+            pygame.display.flip()
+            
             # Append index so phrase is not reused.
             usedPhraseIndex.append(messageIndex)
             # And wait...
@@ -68,6 +74,7 @@ def mainMenu(screen):
         # Sleep my pretty.... sleep...
         time.sleep(0.75)
     
+    time.sleep(1.5)
     return
 
 # If this module is run directly
@@ -78,4 +85,5 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((width, height)) # Create the screen
     pygame.display.set_caption("S-kuru") # And give it a title
     mainMenu(screen)
+    pygame.quit()
     raw_input("Finished!")

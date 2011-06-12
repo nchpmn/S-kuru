@@ -45,6 +45,20 @@ class Button():
         textPos = self.pos
         self.surface.blit(text, textPos)
 
+# Class unrequired - commented out
+#class Text():
+#    def __init__(self, x, y, content, colourID, sizeID, surface):
+#        self.pos = [int(x),int(y)]
+#        self.text = content
+#        self.colourID = colourID
+#        self.sizeID = sizeID
+#        self.surface = surface
+#    
+#    def update(self):
+#        text = renderFont(self.size, self.colourID, self.content)
+#        textPos = self.pos
+#        self.surface.blit(text, textPos)
+
 # --- FUNCTIONS -------------------------------------------
 
 # Return an RGB Colour Value based on a colour ID
@@ -65,15 +79,15 @@ def textColour(colourID):
 # Render a font ready for blitting to surface
 def renderFont(sizeID, colourID, content):
     if sizeID == 1:
-        pixelSize = fontSize1.render(content, 1, textColour(colourID))
+        finalText = fontSize1.render(content, 1, textColour(colourID))
     elif sizeID == 2:
-        pixelSize = fontSize2.render(content, 1, textColour(colourID))
+        finalText = fontSize2.render(content, 1, textColour(colourID))
     elif sizeID == 3:
-        pixelSize = fontSize3.render(content, 1, textColour(colourID))
+        finalText = fontSize3.render(content, 1, textColour(colourID))
     elif sizeID == 4:
-        pixelSize = fontSize4.render(content, 1, textColour(colourID))
+        finalText = fontSize4.render(content, 1, textColour(colourID))
     
-    return pixelSize
+    return finalText
 
 # Return the pixel height and width of a block of text
 def calculateTextSize(sizeID, content):
