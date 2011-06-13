@@ -3,6 +3,8 @@
 
 # Import required modules
 import pygame
+import playGame
+import editLevel
 
 # --- INITIALISATION --------------------------------------
 pygame.font.init()
@@ -22,6 +24,7 @@ class Button():
         self.size = sizeID
         self.colourID = colourID
         self.originalColourID = colourID
+        self.actionID = actionID
         self.surface = surface
     
     # Check for mouseover, change the colour if needed and blit to surface
@@ -44,6 +47,29 @@ class Button():
         text = renderFont(self.size, self.colourID, self.content)
         textPos = self.pos
         self.surface.blit(text, textPos)
+    
+    def getXPos(self):
+        XPosition = [self.pos[0], (self.pos[0] + fontSize1.size(self.content)[0])]
+        return XPosition
+    
+    def getYPos(self):
+        YPosition = [self.pos[1], (self.pos[1] + fontSize1.size(self.content)[1])]
+        return YPosition
+    
+    def doAction(self, screen):
+        if self.actionID == 0:
+            # Unsure how to safely exit PyGame from submodule
+            pass
+        elif self.actionID == 1:
+            playGame.preGame(screen)
+        elif self.actionID == 2:
+            editLevel.preEdit(screen)
+        elif self.actionID == 3:
+            pass
+        elif self.actionID == 4:
+            pass
+        elif self.actionID == 5:
+            pass
 
 # Class unrequired - commented out
 #class Text():

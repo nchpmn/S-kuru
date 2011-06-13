@@ -58,8 +58,17 @@ while mainRunning:
     
     # --- Event Catching & Handling ---
     for event in pygame.event.get():
+        # Quit PyGame safely upon exit
         if event.type == pygame.QUIT:
             mainRunning = False
+        # Make the buttons do actions
+        if event.type == pygame.MOUSEBUTTONUP:
+            mousePos = pygame.mouse.get_pos()
+            for button in menuList:
+                X = button.getXPos()
+                Y = button.getYPos()
+                if X[0] < mousePos[0] < X[1] and Y[0] < mousePos[1] < Y [1]:
+                    button.doAction(screen)
     
     pygame.display.flip()
     
