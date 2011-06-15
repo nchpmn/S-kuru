@@ -21,7 +21,7 @@ def preGame(screen):
 # Get player Profile
 def playerProfile(screen):
     textSize = text.calculateTextSize(1, "Player Name:")[0]
-    title = text.StaticText((400 - textSize/2), 100, "Player Name", 1, 3, screen)
+    title = text.StaticText((400 - textSize/2), 100, "Player Name", 3, 1, screen)
     playerName = ""
     current_string = []
 
@@ -50,7 +50,7 @@ def playerProfile(screen):
         # Rendar and display the textbox
         if len(current_string) != 0:
             content = string.join(current_string,"")
-            text.updateDynamicText(content, 2, (screen.get_width() / 2) - 100, (screen.get_height() / 2) - 10, screen)        
+            text.updateDynamicText(((screen.get_width() / 2) - 100), ((screen.get_height() / 2) - 10), content, 2, 2, screen)        
         
         pygame.display.flip()
     
