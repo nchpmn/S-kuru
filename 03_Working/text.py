@@ -129,6 +129,7 @@ def calculateTextSize(sizeID, content):
         pixelSize = fontSize3.size(content)
     elif sizeID == 4:
         pixelSize = fontSize4.size(content)
+    return pixelSize
 
 # Create a menu with specific spacing from a list of strings
 def menuCreator(menuTextList, menuX, menuY, menuSpacer, sizeID, colourID, surface):
@@ -141,3 +142,9 @@ def menuCreator(menuTextList, menuX, menuY, menuSpacer, sizeID, colourID, surfac
         n += 1
 
     return menu
+
+def updateDynamicText(x, y, content, sizeID, colourID, surface):
+    safeContent = str(content)
+    text = renderFont(sizeID, colourID, safeContent)
+    textPos = (int(x), int(y))
+    surface.blit(text, textPos)
