@@ -4,7 +4,7 @@
 # --- IMPORT MODULES --------------------------------------
 import pygame
 import text
-#import fileHandling
+import fileHandling
 import string
 
 # --- CLASSES ---------------------------------------------
@@ -15,8 +15,9 @@ def preGame(screen):
     #   1. get player profile
     #   2. pick level type & level
     #   3. load level
-    playerName = playerProfile(screen)
+    playerData = playerProfile(screen)
     levelChoose(screen)
+    loadLevel(playerData)
 
 # Get player Profile
 def playerProfile(screen):
@@ -47,7 +48,7 @@ def playerProfile(screen):
         else:
             pass
         
-        # Rendar and display the textbox
+        # Render and display the textbox
         if len(current_string) != 0:
             content = string.join(current_string,"")
             text.updateDynamicText(((screen.get_width() / 2) - 100), ((screen.get_height() / 2) - 10), content, 2, 2, screen)        
@@ -55,7 +56,7 @@ def playerProfile(screen):
         pygame.display.flip()
     
     # Final player Name
-    return string.join(current_string,"")
+    return fileHandling.playerProfileLoad(string.join(current_string,""))
     
 def levelChoose(screen):
     levelMText = [["Campaign", 3], ["Custom", 4]]
@@ -91,3 +92,6 @@ def levelChoose(screen):
                         button.doAction(screen)
         
         pygame.display.flip()
+
+def loadLevel(playerData):
+    pass
