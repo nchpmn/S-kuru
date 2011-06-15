@@ -15,7 +15,7 @@ def preGame(screen):
     #   1. get player profile
     #   2. pick level type & level
     #   3. load level
-    playerProfile(screen)
+    playerName = playerProfile(screen)
     levelChoose(screen)
 
 # Get player Profile
@@ -55,8 +55,8 @@ def playerProfile(screen):
         pygame.display.flip()
     
     # Final player Name
-    playerName = string.join(current_string,"")
-
+    return string.join(current_string,"")
+    
 def levelChoose(screen):
     levelMText = [["Campaign", 3], ["Custom", 4]]
     levelMenu = text.menuCreator(levelMText, 200, 300, 100, 1, 2, screen)
