@@ -16,6 +16,15 @@ import loadScreen
 import graphics
 import text
 
+# --- FUNCTIONS -------------------------------------------
+# Update all objects with only one line during the MAINLOOP
+def updateObjects(buttons, logo):
+    logo.update()
+    for b in buttons:
+        b.update()
+    
+    
+    
 # --- INITIALISATION --------------------------------------
 # Create the screen
 width = 800
@@ -52,9 +61,7 @@ while mainRunning:
     screen.fill((146,146,146))
     
     # --- Set & Update Objects ---
-    skuruLogo.update()
-    for button in menuList:
-        button.update()
+    updateObjects(menuList, skuruLogo)
     
     # --- Event Catching & Handling ---
     for event in pygame.event.get():

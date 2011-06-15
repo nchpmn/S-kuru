@@ -57,33 +57,37 @@ class Button():
         return YPosition
     
     def doAction(self, screen):
+        # Global >> Quit S-kuru
         if self.actionID == 0:
             # Unsure how to safely exit PyGame from submodule
             pass
+        # MainMenu >> PlayGame
         elif self.actionID == 1:
             playGame.preGame(screen)
+        # MainMenu >> EditLevel
         elif self.actionID == 2:
             editLevel.preEdit(screen)
+        # PreGameLevel >> Campaign
         elif self.actionID == 3:
             pass
+        # PreGameLevel >> UserLevel
         elif self.actionID == 4:
             pass
         elif self.actionID == 5:
             pass
 
-# Class unrequired - commented out
-#class Text():
-#    def __init__(self, x, y, content, colourID, sizeID, surface):
-#        self.pos = [int(x),int(y)]
-#        self.text = content
-#        self.colourID = colourID
-#        self.sizeID = sizeID
-#        self.surface = surface
-#    
-#    def update(self):
-#        text = renderFont(self.size, self.colourID, self.content)
-#        textPos = self.pos
-#        self.surface.blit(text, textPos)
+class StaticText():
+    def __init__(self, x, y, content, colourID, sizeID, surface):
+        self.pos = [int(x),int(y)]
+        self.text = content
+        self.colourID = colourID
+        self.sizeID = sizeID
+        self.surface = surface
+    
+    def update(self):
+        text = renderFont(self.sizeID, self.colourID, self.text)
+        textPos = self.pos
+        self.surface.blit(text, textPos)
 
 # --- FUNCTIONS -------------------------------------------
 
