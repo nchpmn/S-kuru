@@ -10,7 +10,7 @@ import os
 
 # --- FUNCTIONS -------------------------------------------
 def playerProfileLoad(playerName):
-    fileName = os.path.abspath(os.path.join("04_players", "Plr-" + str(playerName) + ".skp"))
+    fileName = os.path.abspath(os.path.join("04_players", "Plyr-" + str(playerName) + ".skp"))
     
     try:
         playerFile = open(fileName,'r')
@@ -22,9 +22,18 @@ def playerProfileLoad(playerName):
         playerFile = open(fileName, 'w')
         #playerFile.write(["001","001"])
         #playerFile.close
-        playerData = ["001","001"]
+        playerData = ["1","1"]
     
-    return playerData
+    # These lines need to be fixed when YAML parsing is implemented.
+    return ["1","1"]
+
+def levelLoad(fileName):
+    levelFile = open(fileName, 'r')
+    loadData = yaml.load(levelFile)
+    
+    # This will appear in the sequence: Text, Circles, Balls, Exits
+    
+    return loadData
 
 # If this module is run directly
 if __name__ == '__main__':

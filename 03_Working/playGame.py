@@ -16,11 +16,10 @@ def preGame(screen):
     #   2. pick level type & level
     #   3. load level
     
-    levelSet = None
-    
     playerData = playerProfile(screen)
-    levelChoose(screen, levelSet)
-    loadLevel(playerData, levelSet)
+    levelChoose(screen, playerData)
+    # loadLevel() is now called from within levelChoose()
+    # loadLevel(playerData, levelSet)
 
 # Get player Profile
 def playerProfile(screen):
@@ -61,15 +60,16 @@ def playerProfile(screen):
     # Final player Name
     return fileHandling.playerProfileLoad(string.join(current_string,""))
     
-def levelChoose(screen, levelSet):
+def levelChoose(screen, playerData):
     levelMText = [["Campaign", 3], ["Custom", 4]]
     levelMenu = text.menuCreator(levelMText, 200, 300, 100, 1, 2, screen)
     
     levelMenuClock = pygame.time.Clock()
+    levelChooseRunning = True
     
     menuHeader = text.StaticText(100, 25, "Select Level Type:", 2, 1, screen)
     
-    while levelSet == None:
+    while levelChooseRunning:
         levelMenuClock.tick(60)
         
         screen.fill((146,146,146))
@@ -91,20 +91,23 @@ def levelChoose(screen, levelSet):
                     X = button.getXPos()
                     Y = button.getYPos()
                     if X[0] < mousePos[0] < X[1] and Y[0] < mousePos[1] < Y [1]:
-                        levelSet = button.doAction(screen)
-                        print "levelSet", levelSet
+                        levelChooseRunning = False
+                        loadLevel(playerData, button.doAction(screen))
         
         pygame.display.flip()
 
 def loadLevel(playerData, levelSet):
-    print playerData
     # If playing the **campaign** levels...
     if str(levelSet) == "0":
-        print playerData[0]
+        # Create the filename
+        fileName = "02_levels\Lvl-" + str(playerData[0]).zfill(3) + ".skl"
+        
+        # This data is an array: Text, Circles, Balls, Exits
+        levelData = fileHandling.levelLoad(fileName)
+        
+    # Otherwise, we must be playing the **user** levels...
     elif str(levelSet) == "1":
-        print playerData[1]
-    
-    raw_input("...")
+        print "COMING SOON...", playerData[1]
     
 # If this module is run directly
 if __name__ == '__main__':
