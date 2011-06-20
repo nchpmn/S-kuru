@@ -69,10 +69,12 @@ class Button():
             editLevel.preEdit(screen)
         # PreGameLevel >> Campaign
         elif self.actionID == 3:
-            pass
+            print "CAMPAIGN BUTTON"
+            return 0
         # PreGameLevel >> UserLevel
         elif self.actionID == 4:
-            pass
+            print "USERLEVELS BUTTON"
+            return 1
         elif self.actionID == 5:
             pass
 

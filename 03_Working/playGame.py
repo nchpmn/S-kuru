@@ -15,9 +15,12 @@ def preGame(screen):
     #   1. get player profile
     #   2. pick level type & level
     #   3. load level
+    
+    levelSet = None
+    
     playerData = playerProfile(screen)
-    levelChoose(screen)
-    loadLevel(playerData)
+    levelChoose(screen, levelSet)
+    loadLevel(playerData, levelSet)
 
 # Get player Profile
 def playerProfile(screen):
@@ -58,16 +61,15 @@ def playerProfile(screen):
     # Final player Name
     return fileHandling.playerProfileLoad(string.join(current_string,""))
     
-def levelChoose(screen):
+def levelChoose(screen, levelSet):
     levelMText = [["Campaign", 3], ["Custom", 4]]
     levelMenu = text.menuCreator(levelMText, 200, 300, 100, 1, 2, screen)
     
-    levelMenuRunning = True
     levelMenuClock = pygame.time.Clock()
     
     menuHeader = text.StaticText(100, 25, "Select Level Type:", 2, 1, screen)
     
-    while levelMenuRunning:
+    while levelSet == None:
         levelMenuClock.tick(60)
         
         screen.fill((146,146,146))
@@ -89,9 +91,28 @@ def levelChoose(screen):
                     X = button.getXPos()
                     Y = button.getYPos()
                     if X[0] < mousePos[0] < X[1] and Y[0] < mousePos[1] < Y [1]:
-                        button.doAction(screen)
+                        levelSet = button.doAction(screen)
+                        print "levelSet", levelSet
         
         pygame.display.flip()
 
-def loadLevel(playerData):
-    pass
+def loadLevel(playerData, levelSet):
+    print playerData
+    # If playing the **campaign** levels...
+    if str(levelSet) == "0":
+        print playerData[0]
+    elif str(levelSet) == "1":
+        print playerData[1]
+    
+    raw_input("...")
+    
+# If this module is run directly
+if __name__ == '__main__':
+    # When run directly, create the PyGame surface and window
+    width = 800
+    height = 600
+    screen = pygame.display.set_mode((width, height)) # Create the screen
+    pygame.display.set_caption("S-kuru") # And give it a title
+    preGame(screen)
+    pygame.quit()
+    raw_input("Finished!")
