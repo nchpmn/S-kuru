@@ -5,3 +5,7 @@ Traceback (most recent call last):
   File "zipextimporter.pyc", line 82, in load_module
   File "text.pyc", line 13, in <module>
 IOError: unable to read font filename
+Traceback (most recent call last):
+  File "__main__.py", line 78, in <module>
+  File "text.pyc", line 69, in doAction
+AttributeError: 'module' object has no attribute 'preEdit'
