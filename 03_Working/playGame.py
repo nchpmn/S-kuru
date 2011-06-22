@@ -92,11 +92,11 @@ def levelChoose(screen, playerData):
                     Y = button.getYPos()
                     if X[0] < mousePos[0] < X[1] and Y[0] < mousePos[1] < Y [1]:
                         levelChooseRunning = False
-                        loadLevel(playerData, button.doAction(screen))
+                        loadLevel(playerData, button.doAction(screen), screen)
         
         pygame.display.flip()
 
-def loadLevel(playerData, levelSet):
+def loadLevel(playerData, levelSet, screen):
     # If playing the **campaign** levels...
     if str(levelSet) == "0":
         # Create the filename
@@ -105,9 +105,14 @@ def loadLevel(playerData, levelSet):
         # This data is an array: Text, Circles, Balls, Exits
         levelData = fileHandling.levelLoad(fileName)
         
+        playGame(screen, playerData, levelData)       
+        
     # Otherwise, we must be playing the **user** levels...
     elif str(levelSet) == "1":
         print "COMING SOON...", playerData[1]
+
+def playGame(screen, playerData, levelData):
+    pass
     
 # If this module is run directly
 if __name__ == '__main__':
