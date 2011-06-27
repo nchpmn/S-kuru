@@ -6,8 +6,34 @@ import pygame
 import text
 import fileHandling
 import string
+import physicsEngine
 
-# --- CLASSES ---------------------------------------------
+# --- UTILITY FUNCTIONS -----------------------------------
+def setCircleColour(colourID):
+    if colourID == 0:
+        colour = (236,236,236)
+    elif colourID == 1:
+        colour = (255,0,0)
+    elif colourID == 2:
+        colour = (0,255,0)
+    elif colourID == 3:
+        colour = (0,0,255)
+    else:
+        colour = (0,0,0)
+    return colour
+
+def setBallColour(colourID):
+    if colourID == 0:
+        colour = (136,136,136)
+    elif colourID == 1:
+        colour = (135,0,0)
+    elif colourID == 2:
+        colour = (0,135,0)
+    elif colourID == 3:
+        colour = (0,0,135)
+    else:
+        colour = (255,255,255)
+    return colour
 
 # --- FUNCTIONS -------------------------------------------
 def preGame(screen):
@@ -112,7 +138,80 @@ def loadLevel(playerData, levelSet, screen):
         print "COMING SOON...", playerData[1]
 
 def playGame(screen, playerData, levelData):
-    pass
+    # Default data
+    textData = levelData[0]
+    circleData = levelData[1]
+    ballData = levelData[2]
+    exitData = levelData[3]
+    
+    # And created data
+    userCircles = []
+    
+    # The vector for gravity
+    gravity = (math.pi, 0.1)
+    # Slow the bounce some amount
+    drag = .999
+    # Elasticity - so balls bounce back apart again
+    elasticity = 0.5
+    
+    # --- CLASSES -----------------------------------------
+    class Ball():
+        def __init__(self, x, y, size, colourID, screen):
+            self.x = x
+            self.y = y
+            self.radius = size
+            self.colour = setBallColour(colourID)
+            self.screen = screen
+            
+            # And some default parameters
+            self.exited = False
+            self.thickness = 0
+            self.speed = 0.01
+            self.angle = math.pi/2
+        
+        # Calculate movement and blit the ball to the surface
+        def update(self):
+            # Check that the ball hasn't exited before doing calculations
+            if self.exited != True:
+                # Move x
+                self.x += math.sin(self.angle) * self.speed
+                # Move y
+                self.y -= math.cos(self.angle) * self.speed
+                # Add vectors to calculate speed and velocity
+                (self.angle, self.speed) = physicsEngine.addVectors((self.angle, self.speed), gravity)
+                # Multiply by drag to reduce speed due to "friction"
+                self.speed *= drag
+                # Blit to screen
+                pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
+                
+    class Circle():
+        def __init(self, x, y, size, colourID, screen):
+            self.pos = (int(x),int(y))
+            self.radius = size
+            self.colour = setCircleColour(colourID)
+            self.surface = screen
+            
+            # Some default parameters
+            self.thickness = 0
+            # The next two are needed for collision detection against the balls
+            self.angle = 0
+            self.speed = 0
+        
+        def update(self):
+            pygame.draw.circle(self.surface, self.colour, self.pos, self.size)
+    
+    class Exit():
+        def __init__(self, x, y, size, colourID):
+            self.pos = (int(x), int(y))
+            # Remember that the circle (collisions) size is **radius** - so half the self.size of the square
+            self.size = size # Because square, height and width are both self.size
+            self.colour = setBallColour(colourID)
+
+        def update(self):
+            pygame.draw.rect(surface, self.colour, (self.x, self.y, self.size, self.size))
+    
+    # --- MAIN LOOP ---------------------------------------
+    
     
 # If this module is run directly
 if __name__ == '__main__':

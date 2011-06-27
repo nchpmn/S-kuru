@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "__main__.py", line 15, in <module>
+  File "zipextimporter.pyc", line 82, in load_module
+  File "loadScreen.pyc", line 9, in <module>
+  File "zipextimporter.pyc", line 82, in load_module
+  File "text.pyc", line 13, in <module>
+IOError: unable to read font filename

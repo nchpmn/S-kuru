@@ -26,7 +26,7 @@ def playerProfileLoad(playerName):
         yaml.dump(playerData, playerFile)
         playerFile.close()
         
-    return palyerData
+    return playerData
 
 def levelLoad(fileName):
     levelFile = open(fileName, 'r')
