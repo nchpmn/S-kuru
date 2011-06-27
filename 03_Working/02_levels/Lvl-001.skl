@@ -1,15 +1,19 @@
 - - Let's Start Easy
   - Hold the left mouse button!
   - [2, 50]
-- - - !!python/tuple [400, 150]
+- - - 400
+    - 150
     - 100
     - 0
-  - - !!python/tuple [400, 450]
+  - - 400
+    - 450
     - 50
     - 0
-- - - !!python/tuple [400, 150]
+- - - 400
+    - 150
     - 15
     - 0
-- - - !!python/tuple [400,480]
+- - - 400
+    - 480
     - 20
     - 0

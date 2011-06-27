@@ -29,7 +29,7 @@ class SimpleBox():
         self.height = height
         self.rect = pygame.rect.Rect(self.pos[0], self.pos[1], self.width, self.height)
         self.colour = colourRGB
-        self.screen = screen
+        self.surface = screen
     
     def update(self):
         pygame.draw.rect(self.surface, self.colour, self.rect)
