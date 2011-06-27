@@ -6,6 +6,7 @@ import math
 import pygame
 import graphics
 import physicsEngine
+import text
 
 # --- CLASSES ---------------------------------------------
 class Ball():
@@ -65,9 +66,23 @@ class Exit():
 
 
 # --- FUNCTIONS -------------------------------------------
+def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
+    for c in circles:
+        c.update
+    
+    for c in userCircles:
+        c.update
+    
+    for b in balls:
+        b.update
+    
+    hintRect.update()
+    
+    for t in text:
+        t.update()
 
 # --- MAIN LOOP -------------------------------------------
-def singleLevel(levelData, screen):
+def singleLevel(levelData, playerData, screen):
     textData = levelData[0]
     circleData = levelData[1]
     ballData = levelData[2]
@@ -88,10 +103,7 @@ def singleLevel(levelData, screen):
     drag = .999
     # Elasticity - so balls bounce back apart again
     elasticity = 0.5
-    
-    # --- CLASSES -----------------------------------------
-    
-    
+
     # --- LEVEL INIT --------------------------------------
     # Set up extra bits of the level
     levelClock = pygame.time.Clock() # Limit the FPS during the level
@@ -130,21 +142,6 @@ def singleLevel(levelData, screen):
         updateObjects(screen, textObj, circleObj, userCircles, ballObj, exitObj, hintRect)
     
         pygame.display.flip()
-
-def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
-    for c in circles:
-        c.update
-    
-    for c in userCircles:
-        c.update
-    
-    for b in balls:
-        b.update
-    
-    hintRect.update()
-    
-    for t in text:
-        t.update()
 
 # If this module is run directly
 if __name__ == '__main__':

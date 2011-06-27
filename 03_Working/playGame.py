@@ -6,6 +6,7 @@ import pygame
 import text
 import string
 import fileHandling
+import singleLevel
 
 # --- UTILITY FUNCTIONS -----------------------------------
 def setCircleColour(colourID):
@@ -125,21 +126,15 @@ def loadLevel(playerData, levelSet, screen):
     # If playing the **campaign** levels...
     if str(levelSet) == "0":
         # Create the filename
-        fileName = "02_levels\Lvl-" + str(playerData[0]).zfill(3) + ".skl"
-        
-        # This data is an array: Text, Circles, Balls, Exits
-        levelData = fileHandling.levelLoad(fileName)
-        
-        playGame(screen, playerData, levelData)       
-        
+        fileName = "02_levels\Lvl-" + str(playerData[0]).zfill(3) + ".skl"     
     # Otherwise, we must be playing the **user** levels...
     elif str(levelSet) == "1":
         print "COMING SOON...", playerData[1]
-
-def playGame(screen, playerData, levelData):
     
+    # This data is an array: Text, Circles, Balls, Exits
+    levelData = fileHandling.levelLoad(fileName)
     
-    
+    singleLevel.singleLevel(levelData, playerData, screen)
     
 # If this module is run directly
 if __name__ == '__main__':
