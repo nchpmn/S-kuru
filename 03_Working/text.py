@@ -98,9 +98,9 @@ def textColour(colourID):
     # The colourIDs are as follows:
     # 0 - Black
     # 1 - White
-    # 3 - Dark Grey
-    # 4 - Medium Grey
-    # 5 - Off-White
+    # 2 - Dark Grey
+    # 3 - Medium Grey
+    # 4 - Off-White
     colours = [(0,0,0),
                (255,255,255),
                (64,64,64),
@@ -131,6 +131,8 @@ def calculateTextSize(sizeID, content):
         pixelSize = fontSize3.size(content)
     elif sizeID == 4:
         pixelSize = fontSize4.size(content)
+    else:
+        pixelSize = 0
     return pixelSize
 
 # Create a menu with specific spacing from a list of strings

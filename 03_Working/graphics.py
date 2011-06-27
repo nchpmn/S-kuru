@@ -22,5 +22,17 @@ class Bitmap():
             self.surface.blit(self.bitmap, position)
             self.pos = position
 
+class SimpleBox():
+    def __init__(self, x, y, width, height, colourRGB, screen):
+        self.pos = (x,y)
+        self.width = width
+        self.height = height
+        self.rect = pygame.rect.Rect(self.pos[0], self.pos[1], self.width, self.height)
+        self.colour = colourRGB
+        self.screen = screen
+    
+    def update(self):
+        pygame.draw.rect(self.surface, self.colour, self.rect)
+
 
 # --- FUNCTIONS -------------------------------------------

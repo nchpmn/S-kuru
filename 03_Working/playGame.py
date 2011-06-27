@@ -4,9 +4,11 @@
 # --- IMPORT MODULES --------------------------------------
 import pygame
 import text
-import fileHandling
 import string
+import math
 import physicsEngine
+import fileHandling
+import graphics
 
 # --- UTILITY FUNCTIONS -----------------------------------
 def setCircleColour(colourID):
@@ -144,6 +146,12 @@ def playGame(screen, playerData, levelData):
     ballData = levelData[2]
     exitData = levelData[3]
     
+    # Level data - to be appended once Class() objects created
+    textObj = []
+    circleObj = []
+    ballObj = []
+    exitObj = []
+    
     # And created data
     userCircles = []
     
@@ -204,14 +212,49 @@ def playGame(screen, playerData, levelData):
         def __init__(self, x, y, size, colourID):
             self.pos = (int(x), int(y))
             # Remember that the circle (collisions) size is **radius** - so half the self.size of the square
-            self.size = size # Because square, height and width are both self.size
+            self.size = size*2 # Because square, height and width are both self.size
             self.colour = setBallColour(colourID)
 
         def update(self):
             pygame.draw.rect(surface, self.colour, (self.x, self.y, self.size, self.size))
     
-    # --- MAIN LOOP ---------------------------------------
+    # --- LEVEL INIT --------------------------------------
+    # Set up extra bits of the level
+    levelClock = pygame.time.Clock() # Limit the FPS during the level
+    runningLevel = True # Let us exit the level once completed
     
+    # Set the text variables
+    # textData = [LevelName, HintText, [WinType, WinCondition]]
+    
+    # Level Name
+    newText = text.StaticText(15, 5, textData[0], 2, 2, screen)
+    textObj.append(newText)
+
+    # Hint Text
+    newText = text.StaticText(5, (585-text.calculateTextSize(textData[1], 4)), textData[1], 2, 4, screen)
+    textObj.append(newText)
+    hintRect = graphics.SimpleBox(0, 560, 800, 40, (225, 128, 0), screen)
+    
+    # Goal Text
+    if textData[2][1] == 2:
+        newText = text.StaticText((100,100), "Goal: < " + str(circleGoal), 3, screen)
+        textObj.append(newText)
+    
+    # --- MAIN GAME LOOP ----------------------------------
+    while runningLevel:
+        levelClock.tick(60)
+        
+        # Start with a clean frame
+        screen.fill((146,146,146))
+        
+        # Update & Blit Objects to Surface
+        updateObjects(screen, textObj, circleObj, userCircles, ballObj, exitObj, hintRect)
+    
+        pygame.display.flip()
+
+def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
+    for t in text:
+        t.update()
     
 # If this module is run directly
 if __name__ == '__main__':
