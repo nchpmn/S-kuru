@@ -216,7 +216,8 @@ def singleLevel(levelData, playerData, screen):
         # Grow Circle if user is holding mouse down
         if mouseIsDown == True:
             pygame.draw.circle(screen, setCircleColour(currentColourID), circleCentre, r, 2)
-            r += 1
+            if r < 150:
+                r += 1
             
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -225,7 +226,6 @@ def singleLevel(levelData, playerData, screen):
                 circleCentre = pygame.mouse.get_pos()
                 mouseIsDown = True
             elif event.type == pygame.MOUSEBUTTONUP:
-                print "MouseUp", pygame.mouse.get_pos()
                 mouseIsDown = False
                 newCircle = Circle(circleCentre[0], circleCentre[1], r, currentColourID, screen)
                 userCircleObj.append(newCircle)
