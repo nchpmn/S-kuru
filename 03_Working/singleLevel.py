@@ -147,10 +147,13 @@ def winCheck(balls, userCircles, levelData):
         winFlag = True
         loseFlag = False
         for b in balls:
-            # If all the balls have exited
+            # For each ball
             if b.exited == False:
+                # If the ball hasn't exited, break
                 winFlag = False
+                break
         if winFlag == True:
+            # If all the balls have exited, check the number of circles
             if len(userCircles) <= levelGoal:
                 # If we've used less than the right number of circles
                 return winFlag, loseFlag
@@ -158,10 +161,24 @@ def winCheck(balls, userCircles, levelData):
                 loseFlag = True
                 return winFlag, loseFlag
         else:
+            # Continue the Level
             winFlag, loseFlag = False, False
             return winFlag, loseFlag
     elif int(levelType) == 3:
-        pass
+        # If levelType is Selected Coloured Balls Only
+        winFlag = True
+        loseFlag = False
+        for b in balls:
+            if b.colourID == int(levelGoal) and b.exited == False:
+                # The ball is of the correct colour but has not exited
+                winFlag = False
+                break
+            elif b.colourID != int(levelGoal) and b.exited == True:
+                # An exited ball is of the wrong colour
+                winFlag = False
+                loseFlag = True
+                break
+        return winFlag, loseFlag
     else:
         print "ERROR - WINCHECK FUNCTION IN SINGLELEVEL MODULE"
 
