@@ -31,3 +31,23 @@ def collideTest(A, B):
         return False
 
 # --- FUNCTIONS -------------------------------------------
+def exteriorCircleBounce(A, B):
+    # This is used when the exterior of two circles are colliding.
+    # This happens in two cases:
+    #   1. Two Balls collide
+    #   2. A Ball collides with a circle it can't pass through.
+    dx = A.x - B.x
+    dy = A.y - B.y
+    tangent = math.atan2(dy, dx) # Find the tangent of the point
+    angle = 0.5 * math.pi + tangent # We use this later on
+    A.angle = 2*tangent - A.angle # Alter angles
+    B.angle = 2*tangent - B.angle
+    if A.speed != 0 and B.speed != 0:
+        (A.speed, B.speed) = (B.speed, A.speed) # Swap speeds
+    A.speed *= elasticity # Reduce speed due to elasticity
+    B.speed *= elasticity
+
+    A.x += math.sin(angle) # Move particles away from each other
+    A.y -= math.cos(angle)
+    B.x -= math.sin(angle)
+    B.y += math.cos(angle)

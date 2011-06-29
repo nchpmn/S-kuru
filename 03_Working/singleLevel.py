@@ -61,14 +61,16 @@ class Circle():
         pygame.draw.circle(self.surface, self.colour, self.pos, self.radius)
 
 class Exit():
-    def __init__(self, x, y, size, colourID):
-        self.pos = (int(x), int(y))
+    def __init__(self, x, y, size, colourID, screen):
+        self.x = x
+        self.y = y
         # Remember that the circle (collisions) size is **radius** - so half the self.size of the square
         self.size = size*2 # Because square, height and width are both self.size
         self.colour = setBallColour(colourID)
+        self.surface = screen
 
     def update(self):
-        pygame.draw.rect(surface, self.colour, (self.x, self.y, self.size, self.size))
+        pygame.draw.rect(self.surface, self.colour, (self.x, self.y, self.size, self.size))
 
 
 # --- FUNCTIONS -------------------------------------------
@@ -79,8 +81,12 @@ def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
     for c in userCircles:
         c.update()
     
-    for b in balls:
+    for i, b in enumerate(balls):
         b.update()
+        # Collision Detection
+        for ball2 in balls[i+1:]:
+            if physicsEngine.collideTest(ball, ball2):
+                physicsEngine.exteriorCircleBounce(ball, ball2)
     
     hintRect.update()
     
@@ -171,6 +177,11 @@ def singleLevel(levelData, playerData, screen):
     for ba in ballData:
         newBall = Ball(ba[0], ba[1], ba[2], ba[3], screen)
         ballObj.append(newBall)
+    
+    print exitData
+    for ex in exitData:
+        newExit = Exit(ex[0], ex[1], ex[2], ex[3], screen)
+        exitObj.append(newExit)
     
     # --- MAIN GAME LOOP ----------------------------------
     while runningLevel:
