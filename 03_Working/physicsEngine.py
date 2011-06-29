@@ -25,7 +25,7 @@ def collideTest(A, B):
     # Look, the hypotenuse!
     distance = math.hypot(dx, dy)
     # And we return a boolean
-    if distance <= A.size + B.size:
+    if distance <= A.radius + B.radius:
         return True
     else:
         return False

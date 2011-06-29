@@ -67,7 +67,8 @@ class Exit():
         self.x = x
         self.y = y
         # Remember that the circle (collisions) size is **radius** - so half the self.size of the square
-        self.size = size*2 # Because square, height and width are both self.size
+        self.size = size*2 # The square's "size" (side length) is twice the circle's radius
+        self.radius = size # The circle's "size"
         self.colour = setBallColour(colourID)
         self.surface = screen
 
@@ -90,14 +91,17 @@ def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
         b.update()
         # Collision Detection against other Balls
         for ball2 in balls[i+1:]:
-            if physicsEngine.collideTest(ball, ball2):
-                physicsEngine.exteriorCircleBounce(ball, ball2)
+            if physicsEngine.collideTest(b, ball2):
+                physicsEngine.exteriorCircleBounce(b, ball2)
         tempCircles = []
         for c in circles:
             tempCircles.append(c)
         for c in userCircles:
             tempCircles.append(c)
         physicsEngine.collideCircleTest(b, tempCircles)
+        for e in exits:
+            if physicsEngine.collideTest(b, e):
+                b.exited = True
     
     hintRect.update()
     
