@@ -158,15 +158,33 @@ def singleLevel(levelData, playerData, screen):
     textObj.append(newText)
 
     # Hint Text
-    newText = text.StaticText(5, (585-text.calculateTextSize(textData[1], 4)), textData[1], 2, 4, screen)
+    newText = text.StaticText(5, 580, textData[1], 2, 4, screen)
     textObj.append(newText)
     hintRect = graphics.SimpleBox(0, 560, 800, 40, (225, 128, 0), screen)
     
     # Goal Text
-    if textData[2][1] == 2:
-        newText = text.StaticText((100,100), "Goal: < " + str(circleGoal), 3, screen)
+    # Game Types: 1 ==> Timed; 2 ==> Circles; 3 ==> Selective
+    goalTextX, goalTextY = 100, 100
+    if int(textData[2][0]) == 1:
+        pass
+    elif int(textData[2][0]) == 2:
+        circleGoal = textData[2][1]
+        newText = text.StaticText(goalTextX, goalTextY, "Goal: < " + str(circleGoal), 2, 3, screen)
         textObj.append(newText)
-    
+    elif int(textData[2][0]) == 3:
+        selectiveColourID = textData[2][1]
+        if selectiveColourID == 0:
+            colourText = "White"
+        elif selectiveColourID == 1:
+            colourText = "Red"
+        elif selectiveColourID == 2:
+            colourText = "Green"
+        elif selectiveColourID == 3:
+            colourText = "Blue"
+        else:
+            colourText = "ERROR"
+        newText = text.StaticText(goalTextX, goalTextY, "Colour: " + colourText, 2, 3, screen)
+        
     # --- Set up game objects - balls, circles and exits
     print circleData
     for cir in circleData: # Create objects from the list
