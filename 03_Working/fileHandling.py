@@ -36,6 +36,21 @@ def levelLoad(fileName):
     
     return loadData
 
+def incrementProfileCampaignLevel(playerName):
+    fileName = os.path.abspath(os.path.join("04_players", "Plyr-" + str(playerName) + ".skp"))
+    playerFile = open(fileName,'r')
+    playerData = yaml.load(playerFile)
+    playerFile.close()
+    
+    playerData[0] = str(int(playerData[0])+1)
+    
+    playerFile = open(fileName, 'w')
+    yaml.dump(playerData, playerFile)
+    playerFile.close()
+    
+    return playerData
+    
+
 # If this module is run directly
 if __name__ == '__main__':
     # When run directly, simulate input

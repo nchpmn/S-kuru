@@ -136,6 +136,33 @@ def setBallColour(colourID):
         colour = (255,255,255)
     return colour
 
+def winCheck(balls, userCircles, levelData):
+    levelType, levelGoal = levelData[0], levelData[1]
+    if int(levelType) == 1:
+        pass
+    elif int(levelType) == 2:
+        # If levelType is Circles
+        winFlag = True
+        loseFlag = False
+        for b in balls:
+            # If all the balls have exited
+            if b.exited == False:
+                winFlag = False
+        if winFlag == True:
+            if len(userCircles) <= levelGoal:
+                # If we've used less than the right number of circles
+                return winFlag, loseFlag
+            else:
+                loseFlag = True
+                return winFlag, loseFlag
+        else:
+            winFlag, loseFlag = False, False
+            return winFlag, loseFlag
+    elif int(levelType) == 3:
+        pass
+    else:
+        print "ERROR - WINCHECK FUNCTION IN SINGLELEVEL MODULE"
+
 # --- MAIN LOOP -------------------------------------------
 def singleLevel(levelData, playerData, screen):
     textData = levelData[0]
@@ -166,6 +193,7 @@ def singleLevel(levelData, playerData, screen):
     mouseIsDown = False
     r = 10
     currentColourID = 0
+    winner, loser = False, False
     
     # --- Set the text variables
     # textData = [LevelName, HintText, [WinType, WinCondition]]
@@ -259,6 +287,18 @@ def singleLevel(levelData, playerData, screen):
                     currentColourID = 3
                 else:
                     pass
+        
+        print textData[2]
+        if len(userCircleObj) > 0:
+            winner, loser = winCheck(ballObj, userCircleObj, textData[2])
+            if winner == True and loser == False:
+                # User has won level and not lost
+                runningLevel = False
+                return True
+            elif loser == True:
+                # User did not finish level but did lose level
+                runningLevel = False
+                return false
         
         pygame.display.flip()
 

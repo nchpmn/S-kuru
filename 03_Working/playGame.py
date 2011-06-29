@@ -15,8 +15,8 @@ def preGame(screen):
     #   2. pick level type & level
     #   3. load level
     
-    playerData = playerProfile(screen)
-    levelChoose(screen, playerData)
+    playerData, playerName = playerProfile(screen)
+    levelChoose(screen, playerData, playerName)
     # loadLevel() is now called from within levelChoose()
     # loadLevel(playerData, levelSet)
 
@@ -57,9 +57,9 @@ def playerProfile(screen):
         pygame.display.flip()
     
     # Final player Name
-    return fileHandling.playerProfileLoad(string.join(current_string,""))
+    return fileHandling.playerProfileLoad(string.join(current_string,"")), string.join(current_string, "")
     
-def levelChoose(screen, playerData):
+def levelChoose(screen, playerData, playerName):
     levelMText = [["Campaign", 3], ["Custom", 4]]
     levelMenu = text.menuCreator(levelMText, 200, 300, 100, 1, 2, screen)
     
@@ -91,11 +91,11 @@ def levelChoose(screen, playerData):
                     Y = button.getYPos()
                     if X[0] < mousePos[0] < X[1] and Y[0] < mousePos[1] < Y [1]:
                         levelChooseRunning = False
-                        loadLevel(playerData, button.doAction(screen), screen)
+                        loadLevel(playerData, playerName, button.doAction(screen), screen)
         
         pygame.display.flip()
 
-def loadLevel(playerData, levelSet, screen):
+def loadLevel(playerData, playerName, levelSet, screen):
     # If playing the **campaign** levels...
     if str(levelSet) == "0":
         # Create the filename
@@ -107,7 +107,18 @@ def loadLevel(playerData, levelSet, screen):
     # This data is an array: Text, Circles, Balls, Exits
     levelData = fileHandling.levelLoad(fileName)
     
-    singleLevel.singleLevel(levelData, playerData, screen)
+    nextLevel = singleLevel.singleLevel(levelData, playerData, screen)
+    
+    postLevel(nextLevel, playerName, screen)
+
+def postLevel(nextLevel, playerName, screen):
+    if nextLevel == True:
+        # User has won level and will progress
+        newPlayerData = fileHandling.incrementProfileCampaignLevel(playerName)
+        loadLevel(newPlayerData, playerName, 0, screen)
+    else:
+        # User has lost level - restart
+        pass
     
 # If this module is run directly
 if __name__ == '__main__':
