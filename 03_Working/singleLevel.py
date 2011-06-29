@@ -20,6 +20,7 @@ class Ball():
         self.y = y
         self.radius = size
         self.colour = setBallColour(colourID)
+        self.colourID = colourID
         self.surface = screen
         
         # And some default parameters
@@ -50,6 +51,7 @@ class Circle():
         self.y = y
         self.radius = size
         self.colour = setCircleColour(colourID)
+        self.colourID = colourID
         self.surface = screen
         self.radius = size
         

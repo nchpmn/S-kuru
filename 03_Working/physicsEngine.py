@@ -83,8 +83,12 @@ def collideCircleTest(ball, circles):
                     break
 
             if c.radius - (dist1 - ball.radius) > closestDist:
-                hit = c
-                closestDist = (c.radius - (dist1 - ball.radius))
+                if  c.colourID == ball.colourID or c.colourID == 0:
+                    hit = c
+                    closestDist = (c.radius - (dist1 - ball.radius))
+                else:
+                    # Bounce off the outside of the wrongly-coloured circle
+                    exteriorCircleBounce(c, ball)
     if hit:
         interiorCircleBounce(hit, ball)
 
