@@ -46,6 +46,8 @@ class Ball():
 class Circle():
     def __init__(self, x, y, size, colourID, screen):
         self.pos = (int(x),int(y))
+        self.x = x
+        self.y = y
         self.radius = size
         self.colour = setCircleColour(colourID)
         self.surface = screen
@@ -83,10 +85,16 @@ def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
     
     for i, b in enumerate(balls):
         b.update()
-        # Collision Detection
+        # Collision Detection against other Balls
         for ball2 in balls[i+1:]:
             if physicsEngine.collideTest(ball, ball2):
                 physicsEngine.exteriorCircleBounce(ball, ball2)
+        tempCircles = []
+        for c in circles:
+            tempCircles.append(c)
+        for c in userCircles:
+            tempCircles.append(c)
+        physicsEngine.collideCircleTest(b, tempCircles)
     
     hintRect.update()
     

@@ -51,3 +51,55 @@ def exteriorCircleBounce(A, B):
     A.y -= math.cos(angle)
     B.x -= math.sin(angle)
     B.y += math.cos(angle)
+
+def collideCircleTest(ball, circles):
+    circleIndex = -1
+    closestDist = 0
+    hit = False
+    
+    for c in circles:
+        # Check each ball against every circle
+        circleIndex += 1
+        dx1 = c.x - ball.x 
+        dy1 = c.y - ball.y
+        dist1 = math.hypot(dx1, dy1)
+    
+        if dist1 <= c.radius - 1:
+            # If we are inside 'c'
+            hit = False
+            break
+        else:
+            # If we are outside 'c' or touching the border
+            remainingCir = circles[:] # Make a new list of only remaining circles
+            for c2 in remainingCir:
+                # Check each remaining circle
+                dx2 = c2.x - ball.x
+                dy2 = c2.y - ball.y
+                dist2 = math.hypot(dx2, dy2)
+    
+                if dist2 <= c2.radius:
+                    # If we are inside 'c2'
+                    hit = False
+                    break
+
+            if c.radius - (dist1 - ball.radius) > closestDist:
+                hit = c
+                closestDist = (c.radius - (dist1 - ball.radius))
+    if hit:
+        interiorCircleBounce(hit, ball)
+
+def interiorCircleBounce(C, B):
+    dx = C.x - B.x
+    dy = C.y - B.y
+    
+    tangent = math.atan2(dy, dx)
+    B.angle = 2 * tangent - B.angle
+    B.speed *= elasticity + 0.251
+    
+    distance = math.hypot(dx, dy)
+    reboundFactor = (C.radius - B.radius) - distance
+    # reboundFactor must be more than 1
+    
+    angle = 0.5 * math.pi + tangent
+    B.x += math.sin(angle) * -reboundFactor
+    B.y -= math.cos(angle) * -reboundFactor
