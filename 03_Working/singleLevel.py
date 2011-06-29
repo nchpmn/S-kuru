@@ -77,7 +77,7 @@ class Exit():
 
 
 # --- FUNCTIONS -------------------------------------------
-def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
+def updateObjects(screen, texts, circles, userCircles, balls, exits, hintRect):
     for c in circles:
         c.update()
     
@@ -105,8 +105,10 @@ def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
     
     hintRect.update()
     
-    for t in text:
+    for t in texts:
         t.update()
+    
+    text.updateDynamicText(200, 200, "Circles: " + str(len(userCircles)), 2, 2, screen)
 
 def setCircleColour(colourID):
     if colourID == 0:
