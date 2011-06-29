@@ -108,7 +108,7 @@ def updateObjects(screen, texts, circles, userCircles, balls, exits, hintRect):
     for t in texts:
         t.update()
     
-    text.updateDynamicText(200, 200, "Circles: " + str(len(userCircles)), 2, 2, screen)
+    text.updateDynamicText((800-15-text.calculateTextSize(2, "Circles: " + str(len(userCircles)))[0]), 10, "Circles: " + str(len(userCircles)), 2, 2, screen)
 
 def setCircleColour(colourID):
     if colourID == 0:
@@ -171,17 +171,17 @@ def singleLevel(levelData, playerData, screen):
     # textData = [LevelName, HintText, [WinType, WinCondition]]
     
     # Level Name
-    newText = text.StaticText(15, 5, textData[0], 2, 2, screen)
+    newText = text.StaticText(15, 10, textData[0], 2, 2, screen)
     textObj.append(newText)
 
     # Hint Text
-    newText = text.StaticText(5, 580, textData[1], 2, 4, screen)
+    newText = text.StaticText(5, 570, textData[1], 2, 4, screen)
     textObj.append(newText)
-    hintRect = graphics.SimpleBox(0, 560, 800, 40, (225, 128, 0), screen)
+    hintRect = graphics.SimpleBox(0, 560, 800, 40, (128, 128, 128), screen)
     
     # Goal Text
     # Game Types: 1 ==> Timed; 2 ==> Circles; 3 ==> Selective
-    goalTextX, goalTextY = 100, 100
+    goalTextX, goalTextY = 635, 65
     if int(textData[2][0]) == 1:
         pass
     elif int(textData[2][0]) == 2:
