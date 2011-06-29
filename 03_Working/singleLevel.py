@@ -8,6 +8,11 @@ import graphics
 import physicsEngine
 import text
 
+# --- VARIOUS VARIABLES -----------------------------------
+gravity = (math.pi, 0.1) # The vector for gravity
+drag = .999
+elasticity = 0.5
+
 # --- CLASSES ---------------------------------------------
 class Ball():
     def __init__(self, x, y, size, colourID, screen):
@@ -15,7 +20,7 @@ class Ball():
         self.y = y
         self.radius = size
         self.colour = setBallColour(colourID)
-        self.screen = screen
+        self.surface = screen
         
         # And some default parameters
         self.exited = False
@@ -36,14 +41,15 @@ class Ball():
             # Multiply by drag to reduce speed due to "friction"
             self.speed *= drag
             # Blit to screen
-            pygame.draw.circle(surface, self.colour, (int(self.x), int(self.y)), self.size, self.thickness)
+            pygame.draw.circle(self.surface, self.colour, (int(self.x), int(self.y)), self.radius, self.thickness)
             
 class Circle():
-    def __init(self, x, y, size, colourID, screen):
+    def __init__(self, x, y, size, colourID, screen):
         self.pos = (int(x),int(y))
         self.radius = size
         self.colour = setCircleColour(colourID)
         self.surface = screen
+        self.radius = size
         
         # Some default parameters
         self.thickness = 0
@@ -52,7 +58,7 @@ class Circle():
         self.speed = 0
     
     def update(self):
-        pygame.draw.circle(self.surface, self.colour, self.pos, self.size)
+        pygame.draw.circle(self.surface, self.colour, self.pos, self.radius)
 
 class Exit():
     def __init__(self, x, y, size, colourID):
@@ -68,18 +74,44 @@ class Exit():
 # --- FUNCTIONS -------------------------------------------
 def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
     for c in circles:
-        c.update
+        c.update()
     
     for c in userCircles:
-        c.update
+        c.update()
     
     for b in balls:
-        b.update
+        b.update()
     
     hintRect.update()
     
     for t in text:
         t.update()
+
+def setCircleColour(colourID):
+    if colourID == 0:
+        colour = (236,236,236)
+    elif colourID == 1:
+        colour = (255,0,0)
+    elif colourID == 2:
+        colour = (0,255,0)
+    elif colourID == 3:
+        colour = (0,0,255)
+    else:
+        colour = (0,0,0)
+    return colour
+
+def setBallColour(colourID):
+    if colourID == 0:
+        colour = (136,136,136)
+    elif colourID == 1:
+        colour = (135,0,0)
+    elif colourID == 2:
+        colour = (0,135,0)
+    elif colourID == 3:
+        colour = (0,0,135)
+    else:
+        colour = (255,255,255)
+    return colour
 
 # --- MAIN LOOP -------------------------------------------
 def singleLevel(levelData, playerData, screen):
@@ -127,9 +159,15 @@ def singleLevel(levelData, playerData, screen):
         textObj.append(newText)
     
     # --- Set up game objects - balls, circles and exits
+    print circleData
     for cir in circleData: # Create objects from the list
-        newCircle = Circle()
+        newCircle = Circle(cir[0], cir[1], cir[2], cir[3], screen)
         circleObj.append(newCircle)
+    
+    print ballData
+    for ba in ballData:
+        newBall = Ball(ba[0], ba[1], ba[2], ba[3], screen)
+        ballObj.append(newBall)
     
     # --- MAIN GAME LOOP ----------------------------------
     while runningLevel:
@@ -140,7 +178,7 @@ def singleLevel(levelData, playerData, screen):
         
         # Update & Blit Objects to Surface
         updateObjects(screen, textObj, circleObj, userCircles, ballObj, exitObj, hintRect)
-    
+        
         pygame.display.flip()
 
 # If this module is run directly

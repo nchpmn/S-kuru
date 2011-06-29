@@ -8,33 +8,6 @@ import string
 import fileHandling
 import singleLevel
 
-# --- UTILITY FUNCTIONS -----------------------------------
-def setCircleColour(colourID):
-    if colourID == 0:
-        colour = (236,236,236)
-    elif colourID == 1:
-        colour = (255,0,0)
-    elif colourID == 2:
-        colour = (0,255,0)
-    elif colourID == 3:
-        colour = (0,0,255)
-    else:
-        colour = (0,0,0)
-    return colour
-
-def setBallColour(colourID):
-    if colourID == 0:
-        colour = (136,136,136)
-    elif colourID == 1:
-        colour = (135,0,0)
-    elif colourID == 2:
-        colour = (0,135,0)
-    elif colourID == 3:
-        colour = (0,0,135)
-    else:
-        colour = (255,255,255)
-    return colour
-
 # --- FUNCTIONS -------------------------------------------
 def preGame(screen):
     # Three things to do:
