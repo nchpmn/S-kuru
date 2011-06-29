@@ -83,6 +83,9 @@ def updateObjects(screen, text, circles, userCircles, balls, exits, hintRect):
     for c in userCircles:
         c.update()
     
+    for e in exits:
+        e.update()
+    
     for i, b in enumerate(balls):
         b.update()
         # Collision Detection against other Balls
