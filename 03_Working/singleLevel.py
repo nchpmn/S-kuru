@@ -127,7 +127,7 @@ def singleLevel(levelData, playerData, screen):
     exitObj = []
     
     # And created data
-    userCircles = []
+    userCircleObj = []
     
     # The vector for gravity
     gravity = (math.pi, 0.1)
@@ -140,6 +140,9 @@ def singleLevel(levelData, playerData, screen):
     # Set up extra bits of the level
     levelClock = pygame.time.Clock() # Limit the FPS during the level
     runningLevel = True # Let us exit the level once completed
+    mouseIsDown = False
+    r = 10
+    currentColourID = 0
     
     # --- Set the text variables
     # textData = [LevelName, HintText, [WinType, WinCondition]]
@@ -177,7 +180,39 @@ def singleLevel(levelData, playerData, screen):
         screen.fill((146,146,146))
         
         # Update & Blit Objects to Surface
-        updateObjects(screen, textObj, circleObj, userCircles, ballObj, exitObj, hintRect)
+        updateObjects(screen, textObj, circleObj, userCircleObj, ballObj, exitObj, hintRect)
+        
+        # Event Handling & User Interaction
+        
+        # Grow Circle if user is holding mouse down
+        if mouseIsDown == True:
+            pygame.draw.circle(screen, setCircleColour(currentColourID), circleCentre, r, 2)
+            r += 1
+            
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                runningLevel = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                circleCentre = pygame.mouse.get_pos()
+                mouseIsDown = True
+            elif event.type == pygame.MOUSEBUTTONUP:
+                print "MouseUp", pygame.mouse.get_pos()
+                mouseIsDown = False
+                newCircle = Circle(circleCentre[0], circleCentre[1], r, currentColourID, screen)
+                userCircleObj.append(newCircle)
+                r = 10
+            elif event.type == pygame.KEYDOWN:
+                currentKey = event.key
+                if currentKey == pygame.K_1:
+                    currentColourID = 0
+                elif currentKey == pygame.K_2:
+                    currentColourID = 1
+                elif currentKey == pygame.K_3:
+                    currentColourID = 2
+                elif currentKey == pygame.K_4:
+                    currentColourID = 3
+                else:
+                    pass
         
         pygame.display.flip()
 
