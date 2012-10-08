@@ -1,3 +1,9 @@
+# THIS IS THE ONLY COPY OF S-KURU ANYWHERE
+
+## So, consider not deleting it.
+
+---
+
 ﻿Sākuru
 ======
 
